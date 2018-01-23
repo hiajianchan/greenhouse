@@ -13,3 +13,4 @@ target/
 bin/
 */.classpath
 */.project
+.classpath

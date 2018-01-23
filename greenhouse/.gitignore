@@ -10,6 +10,7 @@ target/
 .project
 .setting/
 .settings/
+.classpath
 # BlueJ files
 *.ctxt
 
