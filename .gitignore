@@ -1,0 +1,15 @@
+*.class
+logs/
+target/
+.idea/
+/src/test/
+.DS_Store 
+*/.DS_Store
+*.log
+.project
+.setting/
+*/.settings/
+*.ctxt
+bin/
+*/.classpath
+*/.project
