@@ -30,13 +30,13 @@
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
 		destroy-method="close">
 		<!-- 数据库驱动 -->
-		<property name="driverClass" value="${jdbc.master.driver}" />
+		<property name="driverClass" value="${jdbc.driver}" />
 		<!-- 相应驱动的jdbcUrl -->
-		<property name="jdbcUrl" value="${jdbc.master.url}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
 		<!-- 数据库的用户名 -->
-		<property name="username" value="${jdbc.master.username}" />
+		<property name="username" value="${jdbc.username}" />
 		<!-- 数据库的密码 -->
-		<property name="password" value="${jdbc.master.password}" />
+		<property name="password" value="${jdbc.password}" />
 		<!-- 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 -->
 		<property name="idleConnectionTestPeriod" value="60" />
 		<!-- 连接池中未使用的链接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 -->

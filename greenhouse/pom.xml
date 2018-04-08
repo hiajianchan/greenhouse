@@ -23,6 +23,8 @@
 		<joda-time.version>2.5</joda-time.version>
 		<commons-lang3.version>3.3.2</commons-lang3.version>
 		<commons-io.version>1.3.2</commons-io.version>
+		<commons-collections.version>3.2.1</commons-collections.version>
+		<commons-fileupload.version>1.3</commons-fileupload.version>
 	</properties>
 	
 	
@@ -170,7 +172,7 @@
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
-			<version>4.0.28.Final</version>
+			<version>4.1.0.Final</version>
 		</dependency>
 		
 		<!-- 时间操作组件 -->
@@ -190,6 +192,16 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>${commons-collections.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons-fileupload.version}</version>
 		</dependency>
 	</dependencies>
   
@@ -220,6 +232,19 @@
 		    <artifactId>maven-bundle-plugin</artifactId>  
 		    <extensions>true</extensions>  
 		</plugin> 
+		
+		<plugin>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-maven-plugin</artifactId>
+			<version>9.4.5.v20170502</version>
+			<!-- <dependencies>
+			    <dependency>
+			      <groupId>org.eclipse.jetty</groupId>
+			      <artifactId>jetty-io</artifactId>
+			      <version>9.4.5.v20170502</version>
+			    </dependency>
+  			</dependencies> -->
+		</plugin>
   	</plugins>
   </build>
 </project>

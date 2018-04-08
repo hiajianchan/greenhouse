@@ -31,7 +31,6 @@
 		<property name="maxUploadSize" value="5242880"></property>
 	</bean>
 	
-	<!-- 登录拦截器 -->
-	
+	<!-- netty服务器 -->
 
 </beans>
