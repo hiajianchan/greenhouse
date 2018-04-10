@@ -2,16 +2,20 @@
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
 	
-	<bean id="serverUDPHandler" class="edu.haut.greenhouse.server.ServerUDPHandler"></bean>
+	<bean id="serverUDPHandler" class="edu.haut.greenhouse.server.udp.ServerUDPHandler"></bean>
 	
-	<bean id="udpServer" class="edu.haut.greenhouse.server.UDPServer" depends-on="serverUDPHandler">
+	<!-- UDP Server -->
+	<bean id="udpServer" class="edu.haut.greenhouse.server.udp.UDPServer" depends-on="serverUDPHandler">
 	<constructor-arg index="0" value="NIO"/>
-	<constructor-arg index="1" value="9996" />
+	<constructor-arg index="1" value="${netty.udp.port}" />
 	</bean>	
+	
+	<!-- websocket Server -->
+	<bean id="websocketServer" class="edu.haut.greenhouse.server.websocket.WebSocketServer"></bean>
 	
 </beans>
