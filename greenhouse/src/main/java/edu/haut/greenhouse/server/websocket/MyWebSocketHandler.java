@@ -30,8 +30,9 @@ import io.netty.util.CharsetUtil;
 public class MyWebSocketHandler extends SimpleChannelInboundHandler<Object> {
 
 	private WebSocketServerHandshaker handshaker;
-	private static final String WEB_SOCKET_URL = "ws://localhost:"+WebsocketConfig.WEBSOCKET_PORT+"/websocket";
-
+	private static final String WEB_SOCKET_URL = "ws://"+WebsocketConfig.ONLINE_IP+":"+
+			WebsocketConfig.WEBSOCKET_PORT+"/websocket";
+	
 	// 客户端与服务端创建连接的时候调用
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
