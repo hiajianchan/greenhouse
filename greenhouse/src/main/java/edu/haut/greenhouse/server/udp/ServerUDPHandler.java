@@ -1,4 +1,4 @@
-package edu.haut.greenhouse.server;
+package edu.haut.greenhouse.server.udp;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

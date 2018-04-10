@@ -1,4 +1,4 @@
-package edu.haut.greenhouse.server;
+package edu.haut.greenhouse.server.udp;
 
 public interface IServer {
 

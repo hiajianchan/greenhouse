@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
-import edu.haut.greenhouse.server.UDPServer;
+import edu.haut.greenhouse.server.udp.UDPServer;
 
 @Controller
 public class TemperatureController {
