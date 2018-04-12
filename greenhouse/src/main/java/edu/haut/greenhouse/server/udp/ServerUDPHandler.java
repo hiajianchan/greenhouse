@@ -24,8 +24,16 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws InterruptedException {
+
 		
 		DatagramPacket packet = (DatagramPacket) msg;
+		
+		//获取客户端的IP
+		String senderHost = packet.sender().getHostString();
+		System.out.println("客户端IP：" + senderHost);
+		int senderPort = packet.sender().getPort();
+		System.out.println("客户端端口号：" + senderPort);
+		
 		ByteBuf buf = packet.copy().content();
 		
 		byte[] req = new byte[buf.readableBytes()];
