@@ -42,8 +42,11 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 		
 		
 		//回复一条消息给客户端
+//		ctx.writeAndFlush(new DatagramPacket(
+//				Unpooled.copiedBuffer("received your msg " + System.currentTimeMillis(), CharsetUtil.UTF_8), 
+//				packet.sender())).sync();
 		ctx.writeAndFlush(new DatagramPacket(
-				Unpooled.copiedBuffer("received your msg " + System.currentTimeMillis(), CharsetUtil.UTF_8), 
+				Unpooled.copiedBuffer("111", CharsetUtil.UTF_8), 
 				packet.sender())).sync();
 	}
 	
