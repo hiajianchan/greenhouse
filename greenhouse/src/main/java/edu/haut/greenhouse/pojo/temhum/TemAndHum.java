@@ -1,4 +1,4 @@
-package edu.haut.greenhouse.pojo;
+package edu.haut.greenhouse.pojo.temhum;
 
 import java.math.BigDecimal;
 import java.util.Date;

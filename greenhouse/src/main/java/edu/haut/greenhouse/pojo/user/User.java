@@ -1,4 +1,4 @@
-package edu.haut.greenhouse.pojo;
+package edu.haut.greenhouse.pojo.user;
 
 import java.util.Date;
 

@@ -2,14 +2,13 @@ package edu.haut.greenhouse.mapper.user;
 
 import com.github.abel533.mapper.Mapper;
 
-import edu.haut.greenhouse.pojo.user.User;
-
+import edu.haut.greenhouse.pojo.user.Role;
 /**
- * 用户Dao
+ * 角色Dao
  * @author chen haijian
  * @date 2018-04-14
  *
  */
-public interface UserMapper extends Mapper<User> {
+public interface RoleMapper extends Mapper<Role> {
 
 }

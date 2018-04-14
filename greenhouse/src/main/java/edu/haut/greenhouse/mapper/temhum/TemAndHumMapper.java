@@ -1,8 +1,8 @@
-package edu.haut.greenhouse.mapper;
+package edu.haut.greenhouse.mapper.temhum;
 
 import com.github.abel533.mapper.Mapper;
 
-import edu.haut.greenhouse.pojo.TemAndHum;
+import edu.haut.greenhouse.pojo.temhum.TemAndHum;
 /**
  * 温湿度数据
  * @author chen haijian
