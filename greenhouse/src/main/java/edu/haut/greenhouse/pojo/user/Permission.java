@@ -57,5 +57,68 @@ public class Permission {
 	 */
 	@Column(name = "update_time")
 	private Date updateTime;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getPerName() {
+		return perName;
+	}
+
+	public void setPerName(String perName) {
+		this.perName = perName;
+	}
+
+	public String getPerNameCh() {
+		return perNameCh;
+	}
+
+	public void setPerNameCh(String perNameCh) {
+		this.perNameCh = perNameCh;
+	}
+
+	public String getPerUrl() {
+		return perUrl;
+	}
+
+	public void setPerUrl(String perUrl) {
+		this.perUrl = perUrl;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	@Override
+	public String toString() {
+		return "Permission [id=" + id + ", perName=" + perName + ", perNameCh=" + perNameCh + ", perUrl=" + perUrl
+				+ ", status=" + status + ", createTime=" + createTime + ", updateTime=" + updateTime + "]";
+	}
+	
 	
 }
