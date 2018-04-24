@@ -1,5 +1,6 @@
 package edu.haut.greenhouse.server.websocket;
 
+import edu.haut.greenhouse.server.AfterSpringBegin;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -23,7 +24,7 @@ public class WebSocketServer extends AfterSpringBegin {
 			b.group(bossGroup, workGroup);
 			b.channel(NioServerSocketChannel.class);
 			b.childHandler(new MyWebsocketChannelHandler());
-			System.out.println("服务器启动等待客户端连接。。。");
+			System.out.println("websocket服务器启动等待客户端连接。。。");
 			Channel ch = b.bind(WebsocketConfig.WEBSOCKET_PORT).sync().channel();
 			ch.closeFuture().sync();
 		} catch (Exception e) {

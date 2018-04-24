@@ -39,6 +39,13 @@
         <property name="cookie" ref="rememberMeCookie"/>
     </bean>
     
+       <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm"/>
+        <property name="sessionManager" ref="sessionManageer"/>
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+    </bean>
+    
      <!-- Shiro过滤器 核心-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <!-- Shiro的核心安全接口,这个属性是必须的 -->

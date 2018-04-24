@@ -1,9 +1,15 @@
 package edu.haut.greenhouse.controller.user;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.haut.greenhouse.common.util.JsonStatus;
 import edu.haut.greenhouse.common.util.JsonUtils;
+import edu.haut.greenhouse.common.util.WebUtils;
 import edu.haut.greenhouse.common.util.user.UserUtil;
 import edu.haut.greenhouse.pojo.user.User;
 import edu.haut.greenhouse.service.user.UserService;
@@ -57,5 +64,65 @@ public class LoginController {
 		return JsonUtils.toJson(map);
 	}
 	
+	/**
+	 * 用户登录
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/login")
+	@ResponseBody
+	public String login(HttpServletRequest request) {
+		Map<Object, Object> map = new HashMap<>();
+		
+		//登录邮箱
+		String email = WebUtils.getNullIfEmpty(request, "email");
+		if (email == null) {
+			map.put(JsonStatus.STATUS, JsonStatus.ERROR);
+			map.put(JsonStatus.MSG, "登录邮箱不能为空");
+			return JsonUtils.toJson(map);
+		}
+		
+		//登录密码
+		String passwd = WebUtils.getNullIfEmpty(request, "passwd");
+		if (passwd == null) {
+			map.put(JsonStatus.STATUS, JsonStatus.ERROR);
+			map.put(JsonStatus.MSG, "密码不能为空");
+			return JsonUtils.toJson(map);
+		}
+		
+		//是否记住我
+		boolean rememberMe = false;
+		Integer rem = WebUtils.getInt(request, "rememberme", 0);
+		if (rem == 1) {
+			rememberMe = true;
+		}
+		
+		Subject subject = SecurityUtils.getSubject();
+		UsernamePasswordToken token = new UsernamePasswordToken(email, passwd, rememberMe);
+		try {
+			
+			//登录
+			subject.login(token);
+			
+		} catch (AuthenticationException e) {
+			map.put(JsonStatus.STATUS, JsonStatus.ERROR);
+			map.put(JsonStatus.MSG, "用户名或密码错误！");
+			log.error(e.toString());
+			e.printStackTrace();
+		}
+		
+		if (subject.isAuthenticated()) {
+			//登录成功
+			map.put(JsonStatus.STATUS, JsonStatus.SUCCESS);
+			//将当前用户放入session
+			Session session = subject.getSession();
+			User record = new User();
+			record.setEmail(email);
+			User user = userService.queryOne(record);
+			session.setAttribute("user", user);
+		}
+		
+		return JsonUtils.toJson(map);
+	}
 	
 }

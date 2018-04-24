@@ -20,12 +20,12 @@ public class NettyServersStartup {
 	@PostConstruct
 	public void init() {
 		//启动UDP Server
-		udpServer.start();
+//		udpServer.start();
 		
 		//启动websocket Server
 		//websocketServer.start();
 		
-		System.out.println("初始化成功！");
+//		System.out.println("初始化成功！");
 	}
 	
 	

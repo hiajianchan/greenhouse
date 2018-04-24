@@ -1,4 +1,4 @@
-package edu.haut.greenhouse.server.websocket;
+package edu.haut.greenhouse.server;
 
 import java.util.Timer;
 import java.util.TimerTask;

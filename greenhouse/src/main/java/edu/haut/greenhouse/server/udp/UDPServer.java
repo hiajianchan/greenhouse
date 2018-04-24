@@ -4,6 +4,7 @@ import java.net.InetSocketAddress;
 
 import javax.annotation.Resource;
 
+import edu.haut.greenhouse.server.AfterSpringBegin;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 
@@ -12,7 +13,7 @@ import io.netty.channel.ChannelFutureListener;
  * @author chj
  * UDP 服务器
  */
-public class UDPServer implements IServer {
+public class UDPServer extends AfterSpringBegin implements IServer {
 	
 	private ChannelType channelType;
 	private InetSocketAddress localAddress;
@@ -43,6 +44,11 @@ public class UDPServer implements IServer {
 	@Override
 	public void restart() {
 		stop();
+		start();
+	}
+
+	@Override
+	public void run() {
 		start();
 	}
 	
