@@ -38,6 +38,15 @@ public class UserInfo {
 	 */
 	@Column(name = "last_ip")
 	private String lastIp;
+	
+	/**
+	 * 登录所在城市
+	 */
+	@Column(name = "last_city")
+	private String lastCity;
+	
+	@Column(name = "last_country")
+	private String lastCountry;
 
 	public Integer getId() {
 		return id;
@@ -70,11 +79,29 @@ public class UserInfo {
 	public void setLastIp(String lastIp) {
 		this.lastIp = lastIp;
 	}
+	
+	
+
+	public String getLastCity() {
+		return lastCity;
+	}
+
+	public void setLastCity(String lastCity) {
+		this.lastCity = lastCity;
+	}
+
+	public String getLastCountry() {
+		return lastCountry;
+	}
+
+	public void setLastCountry(String lastCountry) {
+		this.lastCountry = lastCountry;
+	}
 
 	@Override
 	public String toString() {
-		return "UserInfo [id=" + id + ", userId=" + userId + ", lastLogin=" + lastLogin + ", lastIp=" + lastIp + "]";
+		return "UserInfo [id=" + id + ", userId=" + userId + ", lastLogin=" + lastLogin + ", lastIp=" + lastIp
+				+ ", lastCity=" + lastCity + ", lastCountry=" + lastCountry + "]";
 	}
-	
-	
+
 }

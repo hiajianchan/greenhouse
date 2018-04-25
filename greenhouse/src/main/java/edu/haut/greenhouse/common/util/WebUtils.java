@@ -1,5 +1,6 @@
 package edu.haut.greenhouse.common.util;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
@@ -15,9 +16,13 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -113,11 +118,7 @@ public class WebUtils {
         return content.replaceAll("<", "").replaceAll(">", "");
     }
     
-    public static void main(String[] args) {
-        String s = "\\u003cimg src=1 onerror=alert(/xss/)\\u003e";
-        System.out.println(s.replaceAll("<", ""));
-    }
-
+   
     public static String getNullIfEmpty(HttpServletRequest request, String param) {
         String result = StringUtil.trimSpace(request.getParameter(param));
         if (result == null || "".equals(result)) {
@@ -285,6 +286,53 @@ public class WebUtils {
         return ip;  
     }
     
+    public static Map<Object, Object> getIpInfo(String ip) {
+    	
+    	String content = null;
+    	CloseableHttpClient httpClient = HttpClients.createDefault();
+    	CloseableHttpResponse response = null;
+    	try {
+			URI uri = new URIBuilder("http://ip.taobao.com/service/getIpInfo.php")
+					.setParameter("ip", ip).build();
+			HttpGet httpGet = new HttpGet(uri);
+			httpGet.setHeader("User-Agent", 
+					"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36");
+			
+			response = httpClient.execute(httpGet);
+			
+			if (response.getStatusLine().getStatusCode() == 200) {    //请求执行成功
+				content = EntityUtils.toString(response.getEntity(), "UTF-8");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (response != null) {
+				try {
+					response.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			try {
+				httpClient.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+    	
+    	if (content == null) {
+    		return null;
+    	}
+    	
+    	//对返回值解析
+    	System.out.println(content);
+    	
+    	Map<Object, Object> map1 = JsonUtils.fromJson(content, Map.class);
+    	Map<Object, Object> map2 = (Map<Object, Object>) map1.get("data");
+    	
+    	return map2;
+    }
+    
     public static String getUserAgent(HttpServletRequest request) {
         return request.getHeader("User-Agent");
     }
@@ -321,5 +369,11 @@ public class WebUtils {
         }
         return channel;
     }
+    
+    public static void main(String[] args) {
+        Map<Object, Object> map = getIpInfo("114.111.166.72");
+        System.out.println(map);
+    }
+
 
 }

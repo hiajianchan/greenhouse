@@ -2,8 +2,10 @@ package edu.haut.greenhouse.service.user;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import edu.haut.greenhouse.bean.PageResult;
-import edu.haut.greenhouse.bean.user.UserAndInfo;
+import edu.haut.greenhouse.bean.user.RoleStatus;
+import edu.haut.greenhouse.bean.user.UserDetail;
 import edu.haut.greenhouse.bean.user.UserRoleStatus;
 import edu.haut.greenhouse.bean.user.UserStatus;
 import edu.haut.greenhouse.common.util.user.UserUtil;
@@ -32,6 +35,7 @@ import edu.haut.greenhouse.pojo.user.User;
 import edu.haut.greenhouse.pojo.user.UserInfo;
 import edu.haut.greenhouse.pojo.user.UserRole;
 import edu.haut.greenhouse.service.BaseServiceImpl;
+import redis.clients.jedis.BinaryClient.LIST_POSITION;
 /**
  * 
  * @Description 用户数据的service实现类
@@ -176,15 +180,18 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		List<User> userList = userMapper.selectByExample(example);
 		PageInfo<User> pageInfo = new PageInfo<>(userList);
 		
-		List<UserAndInfo> resList = new ArrayList<>();
+		List<UserDetail> resList = new ArrayList<>();
 		for (User user : userList) {
-			UserAndInfo ui = new UserAndInfo();
+			UserDetail ui = new UserDetail();
 			ui.setUser(user);
 			resList.add(ui);
 		}
 		
 		//填充用户信息
 		fillInfo(resList);
+		
+		//填充juese
+		fillRoles(resList);
 		
 		return new PageResult(pageInfo, resList);
 	}
@@ -193,14 +200,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	 * 填充用户的info信息
 	 * @param resList
 	 */
-	public void fillInfo(List<UserAndInfo> resList) {
+	public void fillInfo(List<UserDetail> resList) {
 		
 		if (resList == null || resList.isEmpty()) {
 			return;
 		}
 		
 		List<Object> idList = new ArrayList<>();
-		for (UserAndInfo ui : resList) {
+		for (UserDetail ui : resList) {
 			idList.add(ui.getUser().getId());
 		}
 		
@@ -210,7 +217,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		
 		List<UserInfo> infos = userInfoMapper.selectByExample(example);
 		
-		for (UserAndInfo uf : resList) {
+		for (UserDetail uf : resList) {
 			for (UserInfo info : infos) {
 				if (uf.getUser().getId().intValue() == info.getUserId().intValue()) {
 					uf.setInfo(info);
@@ -218,6 +225,71 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 				}
 			}
 		}
+	}
+	
+	/**
+	 * 填充用户的角色
+	 * @param resList
+	 */
+	public void fillRoles(List<UserDetail> resList) {
+		if(resList == null || resList.isEmpty()) {
+			return;
+		}
+		
+		List<Object> userList = new ArrayList<>();
+		for (UserDetail ud : resList) {
+			userList.add(ud.getUser().getId());
+		}
+		
+		//根据用户ID集合查询出所有的用户角色关系
+		Example example = new Example(UserRole.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andIn("userId", userList);
+		criteria.andEqualTo("status", UserRoleStatus.USEABLE.getStatus());
+		List<UserRole> userRoles = userRoleMapper.selectByExample(example);
+		
+		if(userRoles == null || userRoles.isEmpty()) {
+			return;
+		}
+		
+		List<Object> roleList = new ArrayList<>();
+		for (UserRole ur : userRoles) {
+			roleList.add(ur.getRoleId());
+		}
+		
+		//根据角色ID查询出角色集合
+		Example example2 = new Example(Role.class);
+		Criteria criteria2 = example2.createCriteria();
+		criteria2.andIn("id", roleList);
+		criteria2.andEqualTo("status", RoleStatus.USEABLE.getStatus());
+		List<Role> roles = roleMapper.selectByExample(example2);
+		
+		Map<Integer, List<Role>> map = new HashMap<>();
+		
+		for (UserRole ur : userRoles) {
+			for (Role role : roles) {
+				if (ur.getRoleId().intValue() == role.getId().intValue()) {  //命中role
+					if (map.containsKey(ur.getUserId())) {
+						List<Role> list = map.get(ur.getUserId());
+						list.add(role);
+						map.put(ur.getUserId(), list);
+						break;
+					} else {
+						List<Role> list = new ArrayList<>();
+						list.add(role);
+						map.put(ur.getUserId(), list);
+						break;
+					}
+				}
+			}
+		}
+		
+		for (UserDetail ud : resList) {
+			if (map.containsKey(ud.getUser().getId())) {
+				ud.setRoles(map.get(ud.getUser().getId()));
+			}
+		}
+		
 	}
 
 }

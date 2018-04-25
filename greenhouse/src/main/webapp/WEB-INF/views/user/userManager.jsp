@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>大路网络IMS仓储管理系统</title>
+<title>温室环境监测系统</title>
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
 
@@ -40,7 +40,7 @@ $(document).ready(function(){
     <span>位置：</span>
     <ul class="placeul">
     <li><a href="${pageContext.request.contextPath}/goIndex">首页</a></li>
-    <li><a href="${pageContext.request.contextPath}/user">用户管理</a></li>
+    <li><a href="${pageContext.request.contextPath}/user/pageList">用户管理</a></li>
     <%--<li><a href="#">基本内容</a></li>--%>
     </ul>
     </div>
@@ -68,9 +68,11 @@ $(document).ready(function(){
     	<thead>
     	<tr>
         <%--<th><input name="" type="checkbox" value="" checked="checked"/></th>--%>
-        <th>用户ID<i class="sort"><img src="${pageContext.request.contextPath}/images/px.gif" /></i></th>
-        <th>用户名</th>
-        <th>密码</th>
+        <%-- <th>用户ID<i class="sort"><img src="${pageContext.request.contextPath}/images/px.gif" /></i></th> --%>
+        <th>姓名</th>
+        <th>性别</th>
+		<th>手机</th>
+		<th>邮箱</th>
         <th>具有的角色</th>
         <th>状态</th>
         <%--<th>是否审核</th>--%>
@@ -78,27 +80,32 @@ $(document).ready(function(){
         </tr>
         </thead>
         <tbody>
-<c:forEach items="${userList}" var="ul">
+<c:forEach items="${result.rows}" var="ul">
 
         <tr>
         <%--<td><input name="" type="checkbox" value="" /></td>--%>
-        <td>${ul.u_id}</td>
-        <td>${ul.userName}</td>
-        <td>${ul.passWord}</td>
+        <td>${ul.user.name}</td>
         <td>
-            <c:forEach items="${roleList}" var="rl">
-                <c:if test="${rl.r_id==ul.roleId}">${rl.roledesc}</c:if>
+        	<c:if test="${ul.user.gender == 1 }">男</c:if>
+        	<c:if test="${ul.user.gender == 2 }">男</c:if>
+        	<c:if test="${ul.user.gender == 0 }">未知</c:if>
+        </td>
+        <td>${ul.user.mobile}</td>
+        <td>${ul.user.email}</td>
+        <td>
+            <c:forEach items="${ul.roles}" var="role">
+                ${role.rolename}&nbsp;
             </c:forEach>
         </td>
         <%--<td>2013-09-09 15:05</td>--%>
         <td>
-            <shiro:hasAnyRoles name="admin,teacher">
-                <c:if test="${ul.u_available==1}"><a href="/user/frozenUser?userid=${ul.u_id}">冻结</a></c:if>
-                <c:if test="${ul.u_available!=1}"><a href="/user/unFrozenUser?userid=${ul.u_id}">解冻</a></c:if>
-            </shiro:hasAnyRoles>
+            <%-- <shiro:hasAnyRoles name="admin,teacher"> --%>
+               <%--  <c:if test="${ul.u_available==1}"><a href="/user/frozenUser?userid=${ul.u_id}">冻结</a></c:if>
+                <c:if test="${ul.u_available!=1}"><a href="/user/unFrozenUser?userid=${ul.u_id}">解冻</a></c:if> --%>
+            <%-- </shiro:hasAnyRoles> --%>
         </td>
-        <td><a href="/user/queryOneUser?userName=${ul.userName}" class="tablelink">修改</a>
-            <a href="/user/deleteUser?userid=${ul.u_id}" class="tablelink"> 删除</a></td>
+       <%--  <td><a href="/user/queryOneUser?userName=${ul.userName}" class="tablelink">修改</a>
+            <a href="/user/deleteUser?userid=${ul.u_id}" class="tablelink"> 删除</a></td> --%>
         </tr>
 
 </c:forEach>

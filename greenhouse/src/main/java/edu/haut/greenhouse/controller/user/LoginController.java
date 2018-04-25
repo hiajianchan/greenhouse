@@ -126,24 +126,27 @@ public class LoginController {
 			User user = userService.queryOne(record);
 			if (user != null) {
 				
-				try {
-					//更新用户的登录信息
-					UserInfo info = new UserInfo();
-					info.setUserId(user.getId());
-					info.setLastLogin(new Date());
-					String realIp = WebUtils.getRealIp(request);
-					info.setLastIp(realIp);
-					userInfoService.updateSelective(info);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
 				session.setAttribute("currUser", user);
 				
 				UserInfo record1 = new UserInfo();
 				record1.setUserId(user.getId());
 				UserInfo userInfo = userInfoService.queryOne(record1);
 				session.setAttribute("currUserInfo", userInfo);
+				try {
+					//更新用户的登录信息
+					UserInfo info = new UserInfo();
+					info.setId(userInfo.getId());
+					info.setUserId(user.getId());
+					info.setLastLogin(new Date());
+					String realIp = WebUtils.getRealIp(request);
+					info.setLastIp(realIp);
+					Map<Object, Object> ipInfo = WebUtils.getIpInfo(realIp);
+					info.setLastCountry(ipInfo.get("country").toString());
+					info.setLastCity(ipInfo.get("city").toString());
+					userInfoService.updateSelective(info);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			
 			return "/common/main";
