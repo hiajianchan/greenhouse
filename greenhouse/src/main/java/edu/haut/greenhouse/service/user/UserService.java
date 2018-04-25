@@ -2,6 +2,7 @@ package edu.haut.greenhouse.service.user;
 
 import java.util.Set;
 
+import edu.haut.greenhouse.bean.PageResult;
 import edu.haut.greenhouse.pojo.user.Permission;
 import edu.haut.greenhouse.pojo.user.Role;
 import edu.haut.greenhouse.pojo.user.User;
@@ -36,5 +37,13 @@ public interface UserService extends BaseService<User> {
 	 * @return
 	 */
 	boolean save(User user, String[] roleList);
+	
+	/**
+	 * 用户详情的分页查询
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	PageResult pageList(int page, int pageSize);
 	
 }

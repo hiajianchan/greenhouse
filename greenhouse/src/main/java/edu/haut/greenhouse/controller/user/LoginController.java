@@ -1,5 +1,6 @@
 package edu.haut.greenhouse.controller.user;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -115,6 +116,7 @@ public class LoginController {
 		}
 		
 		if (subject.isAuthenticated()) {
+			
 			//登录成功
 			map.put(JsonStatus.STATUS, JsonStatus.SUCCESS);
 			//将当前用户放入session
@@ -123,6 +125,19 @@ public class LoginController {
 			record.setEmail(email);
 			User user = userService.queryOne(record);
 			if (user != null) {
+				
+				try {
+					//更新用户的登录信息
+					UserInfo info = new UserInfo();
+					info.setUserId(user.getId());
+					info.setLastLogin(new Date());
+					String realIp = WebUtils.getRealIp(request);
+					info.setLastIp(realIp);
+					userInfoService.updateSelective(info);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 				session.setAttribute("currUser", user);
 				
 				UserInfo record1 = new UserInfo();
@@ -144,6 +159,13 @@ public class LoginController {
 	@RequestMapping("goLogin")
 	public String goLogin() {
 		return "/common/login";
+	}
+	
+	@RequestMapping("/getip")
+	@ResponseBody
+	public String getIp(HttpServletRequest request) {
+		
+		return WebUtils.getRealIp(request);
 	}
 	
 }

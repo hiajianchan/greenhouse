@@ -11,19 +11,25 @@ import org.springframework.stereotype.Service;
 
 import com.github.abel533.entity.Example;
 import com.github.abel533.entity.Example.Criteria;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
+import edu.haut.greenhouse.bean.PageResult;
+import edu.haut.greenhouse.bean.user.UserAndInfo;
 import edu.haut.greenhouse.bean.user.UserRoleStatus;
 import edu.haut.greenhouse.bean.user.UserStatus;
 import edu.haut.greenhouse.common.util.user.UserUtil;
 import edu.haut.greenhouse.mapper.user.PermissionMapper;
 import edu.haut.greenhouse.mapper.user.RoleMapper;
 import edu.haut.greenhouse.mapper.user.RolePermissionMapper;
+import edu.haut.greenhouse.mapper.user.UserInfoMapper;
 import edu.haut.greenhouse.mapper.user.UserMapper;
 import edu.haut.greenhouse.mapper.user.UserRoleMapper;
 import edu.haut.greenhouse.pojo.user.Permission;
 import edu.haut.greenhouse.pojo.user.Role;
 import edu.haut.greenhouse.pojo.user.RolePermission;
 import edu.haut.greenhouse.pojo.user.User;
+import edu.haut.greenhouse.pojo.user.UserInfo;
 import edu.haut.greenhouse.pojo.user.UserRole;
 import edu.haut.greenhouse.service.BaseServiceImpl;
 /**
@@ -38,6 +44,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private UserInfoMapper userInfoMapper;
 
 	@Autowired
 	private UserRoleMapper userRoleMapper;
@@ -156,6 +165,59 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		}
 		return false;
 
+	}
+
+	@Override
+	public PageResult pageList(int page, int pageSize) {
+		
+		PageHelper.startPage(page, pageSize);
+		Example example = new Example(User.class);
+		example.setOrderByClause("registerTime desc");
+		List<User> userList = userMapper.selectByExample(example);
+		PageInfo<User> pageInfo = new PageInfo<>(userList);
+		
+		List<UserAndInfo> resList = new ArrayList<>();
+		for (User user : userList) {
+			UserAndInfo ui = new UserAndInfo();
+			ui.setUser(user);
+			resList.add(ui);
+		}
+		
+		//填充用户信息
+		fillInfo(resList);
+		
+		return new PageResult(pageInfo, resList);
+	}
+	
+	/**
+	 * 填充用户的info信息
+	 * @param resList
+	 */
+	public void fillInfo(List<UserAndInfo> resList) {
+		
+		if (resList == null || resList.isEmpty()) {
+			return;
+		}
+		
+		List<Object> idList = new ArrayList<>();
+		for (UserAndInfo ui : resList) {
+			idList.add(ui.getUser().getId());
+		}
+		
+		Example example = new Example(UserInfo.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andIn("userId", idList);
+		
+		List<UserInfo> infos = userInfoMapper.selectByExample(example);
+		
+		for (UserAndInfo uf : resList) {
+			for (UserInfo info : infos) {
+				if (uf.getUser().getId().intValue() == info.getUserId().intValue()) {
+					uf.setInfo(info);
+					break;
+				}
+			}
+		}
 	}
 
 }

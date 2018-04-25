@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.haut.greenhouse.bean.PageResult;
 import edu.haut.greenhouse.common.util.JsonStatus;
 import edu.haut.greenhouse.common.util.JsonUtils;
 import edu.haut.greenhouse.common.util.WebUtils;
@@ -30,6 +31,8 @@ import edu.haut.greenhouse.service.user.UserService;
 @RequestMapping("user")
 public class UserController {
 	
+	private static final int PAGE_SIZE = 10;
+	
 	@Autowired
 	private UserService userService;
 	
@@ -37,7 +40,12 @@ public class UserController {
 	private RoleService roleService;
 	
 	
-	
+	/**
+	 * 分页查询用户信息
+	 * @param request
+	 * @param map
+	 * @return
+	 */
 	@RequestMapping("/pageList")
 	public String pageList(HttpServletRequest request, Map<Object, Object> map) {
 		
@@ -46,6 +54,8 @@ public class UserController {
 			page = 1;
 		}
 		
+		PageResult result = userService.pageList(page, PAGE_SIZE);
+		map.put("result", result);
 		
 		return "/user/userManager";
 	}
