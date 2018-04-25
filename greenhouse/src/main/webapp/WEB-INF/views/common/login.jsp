@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>大路网络IMS仓储管理系统</title>
+    <title>温室温湿度监测平台</title>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
     <script language="JavaScript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
     <script src="${pageContext.request.contextPath}/js/cloud.js" type="text/javascript"></script>
@@ -30,7 +30,7 @@
 
 
 <div class="logintop">
-    <span>欢迎登录IMS仓储管理界面平台</span>
+    <span>温室温湿度监测平台</span>
     <ul>
         <li><a href="#">回首页</a></li>
         <li><a href="#">帮助</a></li>
@@ -47,15 +47,15 @@
         <form method="post" action="${pageContext.request.contextPath}/login">
             <ul>
                 <li>
-                    <input name="userName" type="text" class="loginuser" onclick="JavaScript:this.value=''" value="<shiro:principal/>"/>
+                    <input name="email" type="text" class="loginuser" onclick="JavaScript:this.value=''" value="<shiro:principal/>"/>
                 </li>
                 <li>
-                    <input name="passWord" type="password" class="loginpwd" onclick="JavaScript:this.value=''"/>
-                    <span>${msg}</span>
+                    <input name="passwd" type="password" class="loginpwd" onclick="JavaScript:this.value=''"/>
+                    <span>${msg}</span><span>${status }</span>
                 </li>
                 <li>
                     <input type="submit" class="loginbtn" value="登录"/>
-                    <label><input name="rememberMe" type="checkbox" checked="checked"/>记住密码</label><label>
+                    <label><input name="rememberme" type="checkbox" checked="checked"/>记住密码</label><label>
                     <a href="#">忘记密码？</a></label>
                 </li>
 

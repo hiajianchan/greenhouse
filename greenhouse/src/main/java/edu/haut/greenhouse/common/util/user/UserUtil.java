@@ -12,12 +12,17 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.crypto.hash.Md5Hash;
+
 import edu.haut.greenhouse.common.util.JsonStatus;
 import edu.haut.greenhouse.common.util.ValidateUtils;
 import edu.haut.greenhouse.common.util.WebUtils;
 import edu.haut.greenhouse.pojo.user.User;
 
 public class UserUtil {
+	
+	public static final String SALT = "fireinthehole";
+	public static final int HASHITERATIONS = 512;
 
 	/**
 	 * 将页面传来的数据填充为user对象
@@ -116,4 +121,14 @@ public class UserUtil {
 		return map;
 	}
 	
+    /**
+     * 将用户的密码加密
+     * @param passwd
+     * @return
+     */
+	public static String pwd2Md5Hash(String passwd) {
+		
+		Md5Hash hash = new Md5Hash(passwd, SALT, HASHITERATIONS);
+		return hash.toString();
+	}
 }

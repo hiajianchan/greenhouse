@@ -29,6 +29,8 @@ import edu.haut.greenhouse.common.util.JsonUtils;
 import edu.haut.greenhouse.common.util.WebUtils;
 import edu.haut.greenhouse.common.util.user.UserUtil;
 import edu.haut.greenhouse.pojo.user.User;
+import edu.haut.greenhouse.pojo.user.UserInfo;
+import edu.haut.greenhouse.service.user.UserInfoService;
 import edu.haut.greenhouse.service.user.UserService;
 @Controller
 public class LoginController {
@@ -37,6 +39,9 @@ public class LoginController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserInfoService userInfoService;
 	
 	@RequestMapping("/register")
 	@ResponseBody
@@ -70,16 +75,14 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping("/login")
-	@ResponseBody
-	public String login(HttpServletRequest request) {
-		Map<Object, Object> map = new HashMap<>();
+	public String login(HttpServletRequest request, Map<Object, Object> map) {
 		
 		//登录邮箱
 		String email = WebUtils.getNullIfEmpty(request, "email");
 		if (email == null) {
 			map.put(JsonStatus.STATUS, JsonStatus.ERROR);
 			map.put(JsonStatus.MSG, "登录邮箱不能为空");
-			return JsonUtils.toJson(map);
+			return "/common/login";
 		}
 		
 		//登录密码
@@ -87,7 +90,7 @@ public class LoginController {
 		if (passwd == null) {
 			map.put(JsonStatus.STATUS, JsonStatus.ERROR);
 			map.put(JsonStatus.MSG, "密码不能为空");
-			return JsonUtils.toJson(map);
+			return "/common/login";
 		}
 		
 		//是否记住我
@@ -119,10 +122,28 @@ public class LoginController {
 			User record = new User();
 			record.setEmail(email);
 			User user = userService.queryOne(record);
-			session.setAttribute("user", user);
+			if (user != null) {
+				session.setAttribute("currUser", user);
+				
+				UserInfo record1 = new UserInfo();
+				record1.setUserId(user.getId());
+				UserInfo userInfo = userInfoService.queryOne(record1);
+				session.setAttribute("currUserInfo", userInfo);
+			}
+			
+			return "/common/main";
 		}
 		
-		return JsonUtils.toJson(map);
+		return "/common/login";
+	}
+	
+	/**
+	 * 跳转到登录界面
+	 * @return
+	 */
+	@RequestMapping("goLogin")
+	public String goLogin() {
+		return "/common/login";
 	}
 	
 }

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>大路网络IMS仓储管理系统</title>
+    <title>温室环境监测系统</title>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css" />
     <script language="JavaScript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
 
@@ -44,14 +44,7 @@
         <ul class="menuson">
             <li><cite></cite><a href="${pageContext.request.contextPath}/goIndex" target="rightFrame">首页</a><i></i></li>
             <li class="active"><cite></cite><a href="${pageContext.request.contextPath}/user" target="rightFrame">用户信息</a><i></i></li>
-            <li><cite></cite><a href="${pageContext.request.contextPath}/user/queryRoles" target="rightFrame">新增用户</a><i></i></li>
-            <%--<li><cite></cite><a href="#" target="rightFrame">添加编辑</a><i></i></li>--%>
-            <%--<li><cite></cite><a href="#" target="rightFrame">图片列表</a><i></i></li>--%>
-            <%--<li><cite></cite><a href="#" target="rightFrame">自定义</a><i></i></li>--%>
-            <%--<li><cite></cite><a href="#" target="rightFrame">常用工具</a><i></i></li>--%>
-            <%--<li><cite></cite><a href="#" target="rightFrame">信息管理</a><i></i></li>--%>
-            <%--<li><cite></cite><a href="#" target="rightFrame">Tab页</a><i></i></li>--%>
-            <%--<li><cite></cite><a href="#" target="rightFrame">404页面</a><i></i></li>--%>
+            <li><cite></cite><a href="${pageContext.request.contextPath}/user/toEdit" target="rightFrame">新增用户</a><i></i></li>
         </ul>
     </dd>
 

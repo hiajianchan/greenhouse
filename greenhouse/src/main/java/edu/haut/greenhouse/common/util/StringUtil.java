@@ -179,7 +179,7 @@ public class StringUtil {
 	 */
 	public static String trimAllSpace(String str) {
 		
-		return str.replaceAll("\\s*", "");
+		return str==null ? null : str.replaceAll("\\s*", "");
 	}
 	
 	/**
@@ -188,6 +188,6 @@ public class StringUtil {
 	 * @return
 	 */
 	public static String trimSpace(String str) {
-		return str.trim();
+		return str==null ? null : str.trim();
 	}
 }

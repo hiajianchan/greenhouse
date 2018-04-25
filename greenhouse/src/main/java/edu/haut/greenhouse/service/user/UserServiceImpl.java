@@ -1,6 +1,7 @@
 package edu.haut.greenhouse.service.user;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,9 +12,13 @@ import org.springframework.stereotype.Service;
 import com.github.abel533.entity.Example;
 import com.github.abel533.entity.Example.Criteria;
 
+import edu.haut.greenhouse.bean.user.UserRoleStatus;
+import edu.haut.greenhouse.bean.user.UserStatus;
+import edu.haut.greenhouse.common.util.user.UserUtil;
 import edu.haut.greenhouse.mapper.user.PermissionMapper;
 import edu.haut.greenhouse.mapper.user.RoleMapper;
 import edu.haut.greenhouse.mapper.user.RolePermissionMapper;
+import edu.haut.greenhouse.mapper.user.UserMapper;
 import edu.haut.greenhouse.mapper.user.UserRoleMapper;
 import edu.haut.greenhouse.pojo.user.Permission;
 import edu.haut.greenhouse.pojo.user.Role;
@@ -30,6 +35,9 @@ import edu.haut.greenhouse.service.BaseServiceImpl;
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@Autowired
 	private UserRoleMapper userRoleMapper;
@@ -119,6 +127,35 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		}
 		
 		return null;
+	}
+
+	@Override
+	public boolean save(User user, String[] roleList) {
+		
+		//将用户密码加密
+		user.setPasswd(UserUtil.pwd2Md5Hash(user.getPasswd()));
+		
+		user.setStatus(UserStatus.USEABLE.getStatus());
+		user.setRegisterTime(new Date());
+		int res1 = userMapper.insert(user);
+		
+		int i = 0;
+		for (String str : roleList) {
+			UserRole userRole = new UserRole();
+			userRole.setUserId(user.getId());
+			userRole.setRoleId(Integer.valueOf(str));
+			userRole.setStatus(UserRoleStatus.USEABLE.getStatus());
+			userRole.setCreateTime(new Date());
+			
+			userRoleMapper.insert(userRole);
+			i++;
+		}
+		
+		if (res1 == 1 && i == roleList.length) {
+			return true;
+		}
+		return false;
+
 	}
 
 }

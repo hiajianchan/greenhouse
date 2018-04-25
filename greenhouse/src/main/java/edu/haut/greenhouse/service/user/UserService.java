@@ -28,4 +28,13 @@ public interface UserService extends BaseService<User> {
 	 * @return
 	 */
 	Set<Permission> getPermissions(Integer userId);
+	
+	/**
+	 * 新增用户
+	 * @param user
+	 * @param roleList
+	 * @return
+	 */
+	boolean save(User user, String[] roleList);
+	
 }
