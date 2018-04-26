@@ -32,6 +32,10 @@ public class UserUtil {
 	public static User fillUser(HttpServletRequest request) {
 		
 		User user = new User();
+		
+		Integer id = WebUtils.getInt(request, "id", null);
+		user.setId(id);
+		
 		//姓名
 		String name = WebUtils.getNullIfEmpty(request, "name");
 		user.setName(name);

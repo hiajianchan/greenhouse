@@ -17,7 +17,7 @@ public interface BaseService<T> {
      * @param id
      * @return 返回实体对象
      */
-    T queryById(Long id);
+    T queryById(Integer id);
 
     /**
      * 查询所有数据
@@ -38,6 +38,13 @@ public interface BaseService<T> {
      * @return 返回一个实体Bean类型的list集合
      */
     List<T> queryListByWhere(T record);
+    
+    /**
+     * 根据条件查询
+     * @param example
+     * @return
+     */
+    List<T> queryByExample(Example example);
 
     /**
      * 根据条件分页查询
@@ -97,7 +104,7 @@ public interface BaseService<T> {
      * @param id id
      * @return 返回删除的条数
      */
-    Integer deleteById(Long id);
+    Integer deleteById(Integer id);
 
     /**
      * 批量删除

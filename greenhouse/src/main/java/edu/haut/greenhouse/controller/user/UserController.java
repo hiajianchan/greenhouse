@@ -1,5 +1,7 @@
 package edu.haut.greenhouse.controller.user;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.abel533.entity.Example;
+import com.github.abel533.entity.Example.Criteria;
+
 import edu.haut.greenhouse.bean.PageResult;
 import edu.haut.greenhouse.common.util.JsonStatus;
 import edu.haut.greenhouse.common.util.JsonUtils;
@@ -18,7 +23,9 @@ import edu.haut.greenhouse.common.util.WebUtils;
 import edu.haut.greenhouse.common.util.user.UserUtil;
 import edu.haut.greenhouse.pojo.user.Role;
 import edu.haut.greenhouse.pojo.user.User;
+import edu.haut.greenhouse.pojo.user.UserRole;
 import edu.haut.greenhouse.service.user.RoleService;
+import edu.haut.greenhouse.service.user.UserRoleService;
 import edu.haut.greenhouse.service.user.UserService;
 /**
  * 
@@ -38,6 +45,9 @@ public class UserController {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private UserRoleService userRoleService;
 	
 	
 	/**
@@ -60,13 +70,34 @@ public class UserController {
 		return "/user/userManager";
 	}
 	
+	/**
+	 * 跳转到编辑页面
+	 * @param request
+	 * @param map
+	 * @return
+	 */
 	@RequestMapping("/toEdit")
 	public String toEdit(HttpServletRequest request, Map<Object, Object> map) {
+		
+		Integer uid = WebUtils.getInt(request, "uid", null);
+		if (uid != null) {
+			User user = userService.queryById(uid);
+			map.put("user", user);
+			
+			UserRole userRole = new UserRole();
+			userRole.setUserId(uid);
+			List<UserRole> userRolelist = userRoleService.queryListByWhere(userRole);
+			List<Integer> roleList = new ArrayList<>();
+			for (UserRole ur : userRolelist) {
+				roleList.add(ur.getRoleId());
+			}
+			map.put("roleList", roleList);
+		}
 		
 		List<Role> roles = roleService.queryAll();
 		map.put("roles", roles);
 		
-		return "/user/insertUser";
+		return "/user/edit";
 	}
 	
 	/**
@@ -89,14 +120,19 @@ public class UserController {
 		
 		//验证邮箱是否已经被注册
 		if (user.getEmail() != null) {
-			User user1 = new User();
-			user1.setEmail(user.getEmail());
-			List<User> users = userService.queryListByWhere(user1);
+			Example example = new Example(User.class);
+			Criteria criteria = example.createCriteria();
+			criteria.andEqualTo("email", user.getEmail());
+			if (user.getId() != null) {
+				criteria.andNotEqualTo("id", user.getId());
+			}
+			List<User> users = userService.queryByExample(example);
 			if (users !=null && !users.isEmpty()) {    //该邮箱已经被注册
 				res.put(JsonStatus.STATUS, JsonStatus.ERROR);
 				res.put(JsonStatus.MSG, "该用户已被注册");
 			}
 		}
+		
 		
 		if (roleList == null) {
 			res.put(JsonStatus.STATUS, JsonStatus.ERROR);
@@ -110,15 +146,44 @@ public class UserController {
 			map.put("roles", roles);
 			map.put("user", user);
 			map.put("roleList", roleList);
-			return "/user/insertUser";
+			return "/user/edit";
 		}
 		
 		if (user.getId() == null) {   //用户ID为空，为新增用户
 			userService.save(user, roleList);
 		} else {                    //更新用户信息
-			
+			userService.updateUser(user, roleList);
 		}
 		//重定向到用户列表
+		return "redirect:/user/pageList";
+	}
+	
+	/**
+	 * 更改用户的状态值
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/changeStat")
+	public String changeStat(HttpServletRequest request) {
+		
+		Integer id = WebUtils.getInt(request, "id", null);
+		Integer status = WebUtils.getInt(request, "status", null);
+		if (id == null || status == null) {
+			return "redirect:/user/pageList";
+		}
+		
+		User user = new User();
+		user.setId(id);
+		user.setStatus(status);
+		user.setUpdateTime(new Date());
+		
+		try {
+			userService.updateSelective(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		return "redirect:/user/pageList";
 	}
 
@@ -133,10 +198,16 @@ public class UserController {
 		Map<Object, Object> map = new HashMap<>();
 		
 		String email = request.getParameter("email");
+		Integer uid = WebUtils.getInt(request, "uid", null);
 		
-		User user = new User();
-		user.setEmail(email);
-		List<User> users = userService.queryListByWhere(user);
+		Example example = new Example(User.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("email", email);
+		if (uid != null) {
+			criteria.andNotEqualTo("id", uid);
+		}
+		List<User> users = userService.queryByExample(example);
+		
 		if (users !=null && !users.isEmpty()) {
 			map.put(JsonStatus.STATUS, JsonStatus.SUCCESS);
 			map.put(JsonStatus.MSG, "该邮箱已被注册！");

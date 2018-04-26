@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -75,6 +76,8 @@ $(document).ready(function(){
 		<th>邮箱</th>
         <th>具有的角色</th>
         <th>状态</th>
+        <th>上次登录时间</th>
+        <th>上次登录地点</th>
         <%--<th>是否审核</th>--%>
         <th>操作</th>
         </tr>
@@ -97,15 +100,20 @@ $(document).ready(function(){
                 ${role.rolename}&nbsp;
             </c:forEach>
         </td>
+        <td>
+        	<c:if test="${ul.user.status == 1 }"><font color="green">正常</font></c:if>
+        	<c:if test="${ul.user.status == 3 }"><font color="red">已冻结</font></c:if>
+        </td>
+        <td><fmt:formatDate value="${ul.info.lastLogin }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+        <td>${ul.info.lastCountry }&nbsp;${ul.info.lastCity }</td>
         <%--<td>2013-09-09 15:05</td>--%>
         <td>
-            <%-- <shiro:hasAnyRoles name="admin,teacher"> --%>
-               <%--  <c:if test="${ul.u_available==1}"><a href="/user/frozenUser?userid=${ul.u_id}">冻结</a></c:if>
-                <c:if test="${ul.u_available!=1}"><a href="/user/unFrozenUser?userid=${ul.u_id}">解冻</a></c:if> --%>
-            <%-- </shiro:hasAnyRoles> --%>
-        </td>
-       <%--  <td><a href="/user/queryOneUser?userName=${ul.userName}" class="tablelink">修改</a>
-            <a href="/user/deleteUser?userid=${ul.u_id}" class="tablelink"> 删除</a></td> --%>
+           <shiro:hasAnyRoles name="root,admin">
+               <c:if test="${ul.user.status==1}"><a href="${pageContext.request.contextPath}/user/changeStat?id=${ul.user.id }&status=3"><font color="red">冻结</font></a></c:if>
+               <c:if test="${ul.user.status==3}"><a href="${pageContext.request.contextPath}/user/changeStat?id=${ul.user.id }&status=1"><font color="green">解冻</font></a></c:if>
+       		   <a href="${pageContext.request.contextPath}/user/toEdit?uid=${ul.user.id}" class="tablelink">修改</a>
+           </shiro:hasAnyRoles>
+       </td>
         </tr>
 
 </c:forEach>

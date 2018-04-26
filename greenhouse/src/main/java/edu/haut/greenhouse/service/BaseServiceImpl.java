@@ -24,7 +24,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
      * @param id 传入ID值
      * @return  返回查询到的对象
      */
-    public T queryById(Long id) {
+    public T queryById(Integer id) {
         return this.mapper.selectByPrimaryKey(id);
     }
 
@@ -52,6 +52,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
      */
     public List<T> queryListByWhere(T record) {
         return this.mapper.select(record);
+    }
+    
+    
+    public List<T> queryByExample(Example example) {
+    	return this.mapper.selectByExample(example);
     }
 
     /**
@@ -123,7 +128,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
      * @param id
      * @return
      */
-    public Integer deleteById(Long id) {
+    public Integer deleteById(Integer id) {
         return this.mapper.deleteByPrimaryKey(id);
     }
 

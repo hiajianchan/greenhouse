@@ -57,7 +57,7 @@
 	<div class="formbody">
 	    <div class="formtitle"><span>基本信息</span></div>
 	    <form action="/user/save" method="post" onsubmit='return checkForm()'>
-	    	<input type="hidden" name="id" value="${user.id }"/>
+	    	<input type="hidden" id="uid" name="id" value="${user.id }"/>
 		    <ul class="forminfo">
 		    	<li><label>姓名</label><input name="name" type="text" class="dfinput" value="${user.name }"/><i></i></li>
 		    	<li><label>性别</label>
@@ -90,6 +90,7 @@
 		
 		//邮箱输入失去焦点事件
 		$('#email').blur(function() {
+			var uid = $('#uid').val();
 			var value = $('#email').val();
 			if (value == null || value == '') {
 				return;
@@ -98,7 +99,7 @@
 				type:"GET",
 				url:"/user/checkUserOnly",
 				dataType:"json",
-				data:{email:value},
+				data:{email:value, uid:uid},
 				success:function(data) {
 					if (data['status'] == 200) {
 						//该邮箱已被注册

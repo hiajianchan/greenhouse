@@ -39,6 +39,14 @@ public interface UserService extends BaseService<User> {
 	boolean save(User user, String[] roleList);
 	
 	/**
+	 * 更新用户信息
+	 * @param user
+	 * @param roleList
+	 * @return
+	 */
+	boolean updateUser(User user, String[] roleList);
+	
+	/**
 	 * 用户详情的分页查询
 	 * @param page
 	 * @param pageSize

@@ -35,7 +35,6 @@ import edu.haut.greenhouse.pojo.user.User;
 import edu.haut.greenhouse.pojo.user.UserInfo;
 import edu.haut.greenhouse.pojo.user.UserRole;
 import edu.haut.greenhouse.service.BaseServiceImpl;
-import redis.clients.jedis.BinaryClient.LIST_POSITION;
 /**
  * 
  * @Description 用户数据的service实现类
@@ -170,6 +169,62 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		return false;
 
 	}
+	
+	@Override
+	public boolean updateUser(User user, String[] roleList) {
+		
+		if (user == null || roleList == null || roleList.length == 0) {
+			return false;
+		}
+		
+//		List<Integer> roleidList = new ArrayList<>();
+//		for (String str : roleList) {
+//			roleidList.add(Integer.valueOf(str));
+//		}
+		
+		Integer uid = user.getId();
+		
+		//删除该用户下的用户关系数据
+		Example example = new Example(UserRole.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andEqualTo("userId", uid);
+		userRoleMapper.deleteByExample(example);
+			
+		/*
+		 * 更新用户数据
+		 */
+		//先判断密码，与之前的密码值进行对比，如果一致则不更改密码
+		User user2 = userMapper.selectByPrimaryKey(uid);
+		if (user2.getPasswd().equals(user.getPasswd())) {
+			//密码一致，不更改密码
+			user.setPasswd(null);
+		} else {
+			user.setPasswd(UserUtil.pwd2Md5Hash(user.getPasswd()));
+		}
+		user.setUpdateTime(new Date());
+		int res = userMapper.updateByPrimaryKeySelective(user);
+		
+		
+		//将新的角色写入
+		int i = 0;
+		for (String str : roleList) {
+			UserRole userRole = new UserRole();
+			userRole.setUserId(user.getId());
+			userRole.setRoleId(Integer.valueOf(str));
+			userRole.setStatus(UserRoleStatus.USEABLE.getStatus());
+			userRole.setCreateTime(new Date());
+			
+			userRoleMapper.insert(userRole);
+			i++;
+		}
+		
+		if (res == 1 && i == roleList.length) {
+			return true;
+		}
+		
+		return false;
+	}
+
 
 	@Override
 	public PageResult pageList(int page, int pageSize) {
