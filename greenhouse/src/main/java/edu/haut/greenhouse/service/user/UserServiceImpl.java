@@ -142,7 +142,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	}
 
 	@Override
-	public boolean save(User user, String[] roleList) {
+	public boolean saveUser(User user, String[] roleList) {
+		if (user == null) {
+			return false;
+		}
 		
 		//将用户密码加密
 		user.setPasswd(UserUtil.pwd2Md5Hash(user.getPasswd()));
@@ -152,6 +155,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		int res1 = userMapper.insert(user);
 		
 		int i = 0;
+		if (roleList == null || roleList.length == 0) {
+			if (res1 == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 		for (String str : roleList) {
 			UserRole userRole = new UserRole();
 			userRole.setUserId(user.getId());
@@ -173,7 +183,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	@Override
 	public boolean updateUser(User user, String[] roleList) {
 		
-		if (user == null || roleList == null || roleList.length == 0) {
+		if (user == null) {
 			return false;
 		}
 		
@@ -204,7 +214,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		user.setUpdateTime(new Date());
 		int res = userMapper.updateByPrimaryKeySelective(user);
 		
-		
+		if (roleList == null || roleList.length == 0) {
+			if (res == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 		//将新的角色写入
 		int i = 0;
 		for (String str : roleList) {

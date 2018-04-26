@@ -54,8 +54,8 @@
             <span><img src="${pageContext.request.contextPath}/images/leftico02.png" /></span>角色管理
         </div>
         <ul class="menuson">
-            <li><cite></cite><a href="${pageContext.request.contextPath}/role"  target="rightFrame">角色信息</a><i></i></li>
-            <li><cite></cite><a href="${pageContext.request.contextPath}/role/queryPermission"  target="rightFrame">新增角色</a><i></i></li>
+            <li><cite></cite><a href="${pageContext.request.contextPath}/role/pageList"  target="rightFrame">角色信息</a><i></i></li>
+            <li><cite></cite><a href="${pageContext.request.contextPath}/role/toEdit"  target="rightFrame">新增角色</a><i></i></li>
             <%--<li><cite></cite><a href="#">档案列表显示</a><i></i></li>--%>
         </ul>
     </dd>

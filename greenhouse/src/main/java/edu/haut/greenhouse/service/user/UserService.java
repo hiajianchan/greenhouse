@@ -36,7 +36,7 @@ public interface UserService extends BaseService<User> {
 	 * @param roleList
 	 * @return
 	 */
-	boolean save(User user, String[] roleList);
+	boolean saveUser(User user, String[] roleList);
 	
 	/**
 	 * 更新用户信息

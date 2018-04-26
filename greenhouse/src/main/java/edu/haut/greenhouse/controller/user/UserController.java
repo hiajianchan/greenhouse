@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.abel533.entity.Example;
 import com.github.abel533.entity.Example.Criteria;
 
 import edu.haut.greenhouse.bean.PageResult;
+import edu.haut.greenhouse.bean.user.RoleStatus;
 import edu.haut.greenhouse.common.util.JsonStatus;
 import edu.haut.greenhouse.common.util.JsonUtils;
 import edu.haut.greenhouse.common.util.WebUtils;
@@ -37,6 +39,8 @@ import edu.haut.greenhouse.service.user.UserService;
 @Controller
 @RequestMapping("user")
 public class UserController {
+	
+	private static final int DISPLAY_PAGE = 5;
 	
 	private static final int PAGE_SIZE = 10;
 	
@@ -66,6 +70,10 @@ public class UserController {
 		
 		PageResult result = userService.pageList(page, PAGE_SIZE);
 		map.put("result", result);
+		int fromPage = Math.max(1, (page - 1) / DISPLAY_PAGE * DISPLAY_PAGE + 1);
+		int toPage = Math.min(fromPage + DISPLAY_PAGE - 1, result.getPages());
+		map.put("fromPage", fromPage);
+		map.put("toPage", toPage);
 		
 		return "/user/userManager";
 	}
@@ -94,7 +102,9 @@ public class UserController {
 			map.put("roleList", roleList);
 		}
 		
-		List<Role> roles = roleService.queryAll();
+		Role role = new Role();
+		role.setStatus(RoleStatus.USEABLE.getStatus());
+		List<Role> roles = roleService.queryListByWhere(role);
 		map.put("roles", roles);
 		
 		return "/user/edit";
@@ -114,7 +124,7 @@ public class UserController {
 		
 		//角色信息
 		String[] roleList = request.getParameterValues("roleList");
-		System.out.println(roleList);	
+//		System.out.println(roleList);	
 		//用户数据校验
 		Map<Object, Object> res = UserUtil.verifyUser(user);
 		
@@ -142,7 +152,9 @@ public class UserController {
 		if ((int)res.get(JsonStatus.STATUS) == JsonStatus.ERROR) {    //数据有问题
 			map.put(JsonStatus.MSG, res.get(JsonStatus.MSG));
 			
-			List<Role> roles = roleService.queryAll();
+			Role role = new Role();
+			role.setStatus(RoleStatus.USEABLE.getStatus());
+			List<Role> roles = roleService.queryListByWhere(role);
 			map.put("roles", roles);
 			map.put("user", user);
 			map.put("roleList", roleList);
@@ -150,7 +162,7 @@ public class UserController {
 		}
 		
 		if (user.getId() == null) {   //用户ID为空，为新增用户
-			userService.save(user, roleList);
+			userService.saveUser(user, roleList);
 		} else {                    //更新用户信息
 			userService.updateUser(user, roleList);
 		}
@@ -164,21 +176,30 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/changeStat")
-	public String changeStat(HttpServletRequest request) {
+	public String changeStat(HttpServletRequest request, @RequestParam("id") String ids) {
 		
-		Integer id = WebUtils.getInt(request, "id", null);
+		
 		Integer status = WebUtils.getInt(request, "status", null);
-		if (id == null || status == null) {
+		if (ids == null || status == null) {
 			return "redirect:/user/pageList";
 		}
 		
+		String[] idsArr = ids.split(",");
+		
+		List<Object> uidList = new ArrayList<>();
+		for (String str : idsArr) {
+			uidList.add(Integer.valueOf(str));
+		}
+		
 		User user = new User();
-		user.setId(id);
 		user.setStatus(status);
 		user.setUpdateTime(new Date());
 		
+		Example example = new Example(User.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andIn("id", uidList);
 		try {
-			userService.updateSelective(user);
+			userService.updateSelectiveByWhere(user, example);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

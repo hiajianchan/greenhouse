@@ -4,9 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>大路网络IMS仓储管理系统</title>
+    <title>温室环境监测系统</title>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
-    <script language="JavaScript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
     <script type="text/javascript">
         $(function () {
             //顶部导航切换
@@ -28,13 +28,13 @@
 </div>
 
 <ul class="nav">
-    <li><a href="${pageContext.request.contextPath}/user" target="rightFrame" class="selected"><img
+    <li><a href="${pageContext.request.contextPath}/user/pageList" target="rightFrame" class="selected"><img
             src="${pageContext.request.contextPath}/images/icon01.png" title="用户管理"/>
         <h2>用户管理</h2></a></li>
-    <li><a href="${pageContext.request.contextPath}/role" target="rightFrame"><img
+    <li><a href="${pageContext.request.contextPath}/role/pageList" target="rightFrame"><img
             src="${pageContext.request.contextPath}/images/icon02.png" title="角色管理"/>
         <h2>角色管理</h2></a></li>
-    <li><a href="${pageContext.request.contextPath}/permission" target="rightFrame"><img
+    <li><a href="${pageContext.request.contextPath}/permission/pageList" target="rightFrame"><img
             src="${pageContext.request.contextPath}/images/icon03.png" title="权限管理"/>
         <h2>权限管理</h2></a></li>
     <%--<li><a href="../WEB-INF/View/tools.jsp" target="rightFrame"><img--%>
