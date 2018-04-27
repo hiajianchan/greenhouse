@@ -108,51 +108,63 @@ public class LoginController {
 			//登录
 			subject.login(token);
 			
+			if (subject.isAuthenticated()) {
+				
+				//登录成功
+				map.put(JsonStatus.STATUS, JsonStatus.SUCCESS);
+				//将当前用户放入session
+				Session session = subject.getSession();
+				User record = new User();
+				record.setEmail(email);
+				User user = userService.queryOne(record);
+				if (user != null) {
+					
+					session.setAttribute("currUser", user);
+					
+					UserInfo record1 = new UserInfo();
+					record1.setUserId(user.getId());
+					UserInfo userInfo = userInfoService.queryOne(record1);
+					session.setAttribute("currUserInfo", userInfo);
+					try {
+						//更新用户的登录信息
+						UserInfo info = new UserInfo();
+						info.setId(userInfo.getId());
+						info.setUserId(user.getId());
+						info.setLastLogin(new Date());
+						String realIp = WebUtils.getRealIp(request);
+						info.setLastIp(realIp);
+						Map<Object, Object> ipInfo = WebUtils.getIpInfo(realIp);
+						info.setLastCountry(ipInfo.get("country").toString());
+						info.setLastCity(ipInfo.get("city").toString());
+						userInfoService.updateSelective(info);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				return "/common/main";
+			}
+			
 		} catch (AuthenticationException e) {
 			map.put(JsonStatus.STATUS, JsonStatus.ERROR);
 			map.put(JsonStatus.MSG, "用户名或密码错误！");
 			log.error(e.toString());
 			e.printStackTrace();
 		}
-		
-		if (subject.isAuthenticated()) {
-			
-			//登录成功
-			map.put(JsonStatus.STATUS, JsonStatus.SUCCESS);
-			//将当前用户放入session
-			Session session = subject.getSession();
-			User record = new User();
-			record.setEmail(email);
-			User user = userService.queryOne(record);
-			if (user != null) {
-				
-				session.setAttribute("currUser", user);
-				
-				UserInfo record1 = new UserInfo();
-				record1.setUserId(user.getId());
-				UserInfo userInfo = userInfoService.queryOne(record1);
-				session.setAttribute("currUserInfo", userInfo);
-				try {
-					//更新用户的登录信息
-					UserInfo info = new UserInfo();
-					info.setId(userInfo.getId());
-					info.setUserId(user.getId());
-					info.setLastLogin(new Date());
-					String realIp = WebUtils.getRealIp(request);
-					info.setLastIp(realIp);
-					Map<Object, Object> ipInfo = WebUtils.getIpInfo(realIp);
-					info.setLastCountry(ipInfo.get("country").toString());
-					info.setLastCity(ipInfo.get("city").toString());
-					userInfoService.updateSelective(info);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			
-			return "/common/main";
-		}
-		
-		return "/common/login";
+		token.clear();
+		return "redirect:/goLogin";
+	}
+	
+	/**
+	 * 用户登出
+	 * @return
+	 */
+	@RequestMapping("/logout")
+	public String logout() {
+		Subject sub = SecurityUtils.getSubject();
+        sub.logout();
+        
+        return "redirect:/goLogin";
 	}
 	
 	/**
@@ -160,7 +172,13 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping("goLogin")
-	public String goLogin() {
+	public String goLogin(HttpServletRequest request, Map<Object, Object> map) {
+		
+		String status = request.getParameter("status");
+		map.put(JsonStatus.STATUS, status);
+		String msg = request.getParameter("msg");
+		map.put(JsonStatus.MSG, msg);
+		
 		return "/common/login";
 	}
 	

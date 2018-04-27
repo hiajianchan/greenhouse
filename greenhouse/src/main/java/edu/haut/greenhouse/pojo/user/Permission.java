@@ -34,6 +34,12 @@ public class Permission {
 	private String perNameCh;
 	
 	/**
+	 * 资源对象ID
+	 */
+	@Column(name = "obj_id")
+	private Integer objId;
+	
+	/**
 	 * url
 	 */
 	@Column(name = "per_url")
@@ -113,11 +119,20 @@ public class Permission {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+	
+	public Integer getObjId() {
+		return objId;
+	}
+
+	public void setObjId(Integer objId) {
+		this.objId = objId;
+	}
 
 	@Override
 	public String toString() {
-		return "Permission [id=" + id + ", perName=" + perName + ", perNameCh=" + perNameCh + ", perUrl=" + perUrl
-				+ ", status=" + status + ", createTime=" + createTime + ", updateTime=" + updateTime + "]";
+		return "Permission [id=" + id + ", perName=" + perName + ", perNameCh=" + perNameCh + ", objId=" + objId
+				+ ", perUrl=" + perUrl + ", status=" + status + ", createTime=" + createTime + ", updateTime="
+				+ updateTime + "]";
 	}
 	
 	

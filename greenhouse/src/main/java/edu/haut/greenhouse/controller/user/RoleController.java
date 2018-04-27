@@ -25,7 +25,6 @@ import edu.haut.greenhouse.common.util.WebUtils;
 import edu.haut.greenhouse.pojo.user.Permission;
 import edu.haut.greenhouse.pojo.user.Role;
 import edu.haut.greenhouse.pojo.user.RolePermission;
-import edu.haut.greenhouse.pojo.user.User;
 import edu.haut.greenhouse.service.user.PermissionService;
 import edu.haut.greenhouse.service.user.RolePermissionService;
 import edu.haut.greenhouse.service.user.RoleService;

@@ -51,7 +51,7 @@
                 </li>
                 <li>
                     <input name="passwd" type="password" class="loginpwd" onclick="JavaScript:this.value=''"/>
-                    <span>${msg}</span><span>${status }</span>
+                    <span><font color="red">${msg}</font></span>
                 </li>
                 <li>
                     <input type="submit" class="loginbtn" value="登录"/>

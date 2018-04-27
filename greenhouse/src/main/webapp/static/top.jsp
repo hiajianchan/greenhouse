@@ -49,9 +49,7 @@
 </ul>
 <div class="topright">
     <ul>
-        <li><span><img src="${pageContext.request.contextPath}/images/help.png" title="帮助" class="helpimg"/></span><a
-                href="#">帮助</a></li>
-        <li><a href="#">关于</a></li>
+        <li><a>${currUser.name }  您好，欢迎使用信息管理系统</a></li>
         <li><a href="/logout" target="_parent">退出</a></li>
     </ul>
     <div class="user">

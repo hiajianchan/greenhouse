@@ -29,13 +29,13 @@ $(document).ready(function(){
 });
 
   	//全选或者全不选
-	$('#rid_th').change(function(){
-		if ($('#rid_th').is(':checked')) {
+	$('#pid_th').change(function(){
+		if ($('#pid_th').is(':checked')) {
 			//选中，则id全选中
-			$("input[name='rid_td']").attr("checked",true);
+			$("input[name='pid_td']").attr("checked",true);
 		} else {
 			//未选中，则ID全未选中
-			$("input[name='rid_td']").attr("checked",false);
+			$("input[name='pid_td']").attr("checked",false);
 		}
 	});
 	
@@ -48,10 +48,10 @@ $(document).ready(function(){
 	function changeStat(status) {
 		//获取选中的用户id
 		var chk_value =[];
-		$("input[name='rid_td']:checked").each(function(){
+		$("input[name='pid_td']:checked").each(function(){
 			chk_value.push(this.value);
 		});
-		window.location.href = "/role/changeStat?id="+chk_value+"&status="+status;
+		window.location.href = "/permission/changeStat?id="+chk_value+"&status="+status;
 	}
 </script>
 
@@ -65,7 +65,7 @@ $(document).ready(function(){
     <span>位置：</span>
     <ul class="placeul">
     <li><a href="${pageContext.request.contextPath}/goIndex">首页</a></li>
-    <li><a href="${pageContext.request.contextPath}/role/pageList">角色管理</a></li>
+    <li><a href="${pageContext.request.contextPath}/permission/pageList">角色管理</a></li>
     <%--<li><a href="#">基本内容</a></li>--%>
     </ul>
     </div>
@@ -75,7 +75,7 @@ $(document).ready(function(){
     <div class="tools">
     
     	<ul class="toolbar">
-    	<li><a href="${pageContext.request.contextPath}/role/toEdit"><span><img src="${pageContext.request.contextPath}/images/t01.png"/></span>添加</a></li>
+    	<li><a href="${pageContext.request.contextPath}/permission/toEdit"><span><img src="${pageContext.request.contextPath}/images/t01.png"/></span>添加</a></li>
        <%--<li class="click"><span><img src="${pageContext.request.contextPath}/images/t02.png" /></span>修改</li>--%>        
  		<li><a href="javascript:;" onclick="changeStat(2)"><span><img src="${pageContext.request.contextPath}/images/t03.png" /></span>冻结</a></li>
  		<li><a href="javascript:;" onclick="changeStat(1)"><span><img src="${pageContext.request.contextPath}/images/t02.png" /></span>解冻</a></li>
@@ -91,11 +91,11 @@ $(document).ready(function(){
     <table class="tablelist">
     	<thead>
     	<tr>
-        <th><input id="rid_th" type="checkbox" value=""/></th>
+        <th><input id="pid_th" type="checkbox" value=""/></th>
         <%-- <th>用户ID<i class="sort"><img src="${pageContext.request.contextPath}/images/px.gif" /></i></th> --%>
-        <th>角色</th>
-        <th>角色描述</th>
-        <th>具有的权限</th>
+        <th>资源对象</th>
+        <th>权限</th>
+        <th>权限描述</th>
         <th>状态</th>
         <th>创建时间</th>
         <th>修改时间</th>
@@ -107,25 +107,21 @@ $(document).ready(function(){
 <c:forEach items="${result.rows}" var="ul">
 
         <tr>
-        <td><input name="rid_td" type="checkbox" value="${ul.role.id }" /></td>
-        <td>${ul.role.rolename}</td>
-        <td>${ul.role.rolenameCh}</td>
+        <td><input name="pid_td" type="checkbox" value="${ul.permission.id }" /></td>
+        <td>${ul.resourceObj.nameCh}</td>
+        <td>${ul.permission.perName}</td>
+        <td>${ul.permission.perNameCh}</td>
         <td>
-            <c:forEach items="${ul.perList}" var="per">
-                ${per.perName}&nbsp;
-            </c:forEach>
+        	<c:if test="${ul.permission.status == 1 }"><font color="green">正常</font></c:if>
+        	<c:if test="${ul.permission.status == 2 }"><font color="red">已冻结</font></c:if>
         </td>
-        <td>
-        	<c:if test="${ul.role.status == 1 }"><font color="green">正常</font></c:if>
-        	<c:if test="${ul.role.status == 2 }"><font color="red">已冻结</font></c:if>
-        </td>
-        <td><fmt:formatDate value="${ul.role.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-        <td><fmt:formatDate value="${ul.role.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+        <td><fmt:formatDate value="${ul.permission.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+        <td><fmt:formatDate value="${ul.permission.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td>
            <shiro:hasAnyRoles name="root,admin">
-               <c:if test="${ul.role.status==1}"><a href="${pageContext.request.contextPath}/role/changeStat?id=${ul.role.id }&status=2"><font color="red">冻结</font></a></c:if>
-               <c:if test="${ul.role.status==2}"><a href="${pageContext.request.contextPath}/role/changeStat?id=${ul.role.id }&status=1"><font color="green">解冻</font></a></c:if>
-       		   <a href="${pageContext.request.contextPath}/role/toEdit?rid=${ul.role.id}" class="tablelink">修改</a>
+               <c:if test="${ul.permission.status==1}"><a href="${pageContext.request.contextPath}/permission/changeStat?id=${ul.permission.id }&status=2"><font color="red">冻结</font></a></c:if>
+               <c:if test="${ul.permission.status==2}"><a href="${pageContext.request.contextPath}/permission/changeStat?id=${ul.permission.id }&status=1"><font color="green">解冻</font></a></c:if>
+       		   <a href="${pageContext.request.contextPath}/permission/toEdit?pid=${ul.permission.id}" class="tablelink">修改</a>
            </shiro:hasAnyRoles>
        </td>
         </tr>
@@ -138,15 +134,15 @@ $(document).ready(function(){
     	<div class="message">共<i class="blue">${result.total}</i>条记录，当前显示第&nbsp;<i class="blue">${result.pageNum}&nbsp;</i>页</div>
         <ul class="paginList">
 	        <c:if test="${result.hasPreviousPage == true }">
-	        	<li class="paginItem"><a href="${pageContext.request.contextPath }/role/pageList?page=${result.pageNum-1}"><span class="pagepre"></span></a></li>
+	        	<li class="paginItem"><a href="${pageContext.request.contextPath }/permission/pageList?page=${result.pageNum-1}"><span class="pagepre"></span></a></li>
        		</c:if>
        		<c:forEach var="i" begin="${fromPage }" end="${toPage }">
        			<li class="paginItem <c:if test='${i == result.pageNum}'>current</c:if>">
-       				<a href="${pageContext.request.contextPath }/role/pageList?page=${i}">${i }</a>
+       				<a href="${pageContext.request.contextPath }/permission/pageList?page=${i}">${i }</a>
        			</li>
        		</c:forEach>
        		<c:if test="${result.hasNextPage == true }">
-       			<li class="paginItem"><a href="${pageContext.request.contextPath }/role/pageList?page=${result.pageNum+ 1}"><span class="pagenxt"></span></a></li>
+       			<li class="paginItem"><a href="${pageContext.request.contextPath }/permission/pageList?page=${result.pageNum+ 1}"><span class="pagenxt"></span></a></li>
         	</c:if>
         </ul>
     </div>

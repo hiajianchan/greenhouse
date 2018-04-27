@@ -10,24 +10,56 @@
     <script type="text/javascript">
     	function checkForm() {
     		
-    		//角色不能为空
-    		if ($('input[name="rolename"]').val() == '') {
-    			alert("角色不能为空！");
-    			$('input[name="rolename"]').focus();
+    		//资源对象不能为空
+    		if ($("#obj_select option:selected").val() == '') {
+    			alert("请选择资源对象");
+    			$("#obj_select").focus();
+    			return false;
+    		} else {
+    			$("#objId").val($("#obj_select option:selected").val());
+    		}
+    		//对资源对象的操作不能为空
+    		if ($("#op_select option:selected").val() == '') {
+    			alert("请选择对资源对象的操作");
+    			$("#op_select").focus();
+    			return false;
+    		} else {
+    			$("#op").val($("#op_select option:selected").val());
+    		}
+    		//权限描述不能为空
+    		if ($("input[name='perNameCh']").val() == '') {
+    			alert("权限描述不能为空");
+    			$("input[name='perNameCh']").focus();
     			return false;
     		}
-    		//角色描述不能为空
-    		if ($("input[name='rolenameCh']").val() == '') {
-    			alert("角色描述不能为空");
-    			$("input[name='rolenameCh']").focus();
+    		
+ 			var objId = $("#obj_select option:selected").val();
+ 			var opVal = $("#op_select option:selected").val();
+ 			
+ 			var exist = false;
+    		
+    		$.ajax({
+				type:"GET",
+				url:"/permission/checkOnly",
+				async: false,
+				dataType:"json",
+				data:{objId:objId, opVal:opVal},
+				success:function(data) {
+					if (data['status'] == 200) {
+						//该权限已经存在
+						$('#perName_msg').html(data['msg']);
+						$("#op_select").focus();
+						exist = true;
+					} else {
+						//该角色未存在
+						$('#rolename_msg').html('');
+					}
+				} 
+			});
+    		if (exist) {
     			return false;
     		}
-    		//角色具有的权限不能为空
-    		if ($('input[name="perList"]').val() == '') {
-    			alert("角色不能为空！");
-    			$('input[name="perList"]').focus();
-    			return false;
-    		}
+    		
     		return true;
     	}
     </script>
@@ -39,25 +71,36 @@
 	    <span>位置：</span>
 	    <ul class="placeul">
 	        <li><a href="${pageContext.request.contextPath}/goIndex">首页</a></li>
-	        <li><a href="${pageContext.request.contextPath}/role/toEdit">新增角色</a></li>
+	        <li><a href="${pageContext.request.contextPath}/permission/toEdit">新增权限</a></li>
 	    </ul>
 	</div>
 	
 	<div class="formbody">
 	    <div class="formtitle"><span>基本信息</span></div>
-	    <form action="/role/save" method="post" onsubmit='return checkForm()'>
-	    	<input type="hidden" id="rid" name="rid" value="${role.id }"/>
+	    <form action="/permission/save" method="post" onsubmit='return checkForm()'>
+	    	<input type="hidden" id="pid" name="pid" value="${permission.id }"/>
+	    	<input type="hidden" id="objId" name="objId" value="${permission.objId }"/>
+	    	<input type="hidden" id="op" name="op" value="">
 		    <ul class="forminfo">
-		    	<li><label>角色(英文)</label><input name="rolename" type="text" class="dfinput" value="${role.rolename }"/><font color="red" id="rolename_msg"></font><i></i></li>
-		    	<li><label>角色描述(中文)</label><input name="rolenameCh" type="text" class="dfinput" value="${role.rolenameCh}"/><i></i></li>
-			    <li><label>分配角色</label><cite> 
-			    <c:forEach items="${permissions}" var="per">
-			        <input type="checkbox" name="perList" value="${per.id}" 
-			           <c:forEach items="${perList}" var="perId">
-			    	       <c:if test="${perId==per.id }">checked="checked"</c:if>
-			    	   </c:forEach>
-			        />${per.perNameCh}&nbsp;
-			    </c:forEach></cite></li>
+		    	<li><label>资源对象</label>
+		    		<select class="dfinput" id="obj_select">
+		    			<option value="">请选择</option>
+		    			<c:forEach items="${resobj}" var="obj">
+		    				<option value="${obj.id }">${obj.nameCh }</option>
+		    			</c:forEach>
+		    		</select><i></i>
+		    	</li>
+		    	<li><label>操作方式</label>
+		    		<select class="dfinput" id="op_select">
+		    			<option value="">请选择</option>
+		    			<option value="*">增删查改</option>
+		    			<option value="read">查看</option>
+		    			<option value="create">增加</option>
+		    			<option value="update">修改</option>
+		    			<option value="delete">删除</option>
+		    		</select><font color="red" id="perName_msg"></font><i></i>
+		    	</li>
+		    	<li><label>权限描述(中文)</label><input name="perNameCh" type="text" class="dfinput" value="${permission.perNameCh}"/><i></i></li>
 			    <li style="text-align:center"><label style="color:red">${msg}</label></li>
 			    <li><label>&nbsp;</label><input type="submit" class="btn" value="提交"/>&nbsp;&nbsp;
 			    <input type="reset" value="重置" class="btn"></li>
@@ -80,6 +123,7 @@
 			$.ajax({
 				type:"GET",
 				url:"/role/checkRoleOnly",
+				async: false,
 				dataType:"json",
 				data:{rolename:rolename, rid:rid},
 				success:function(data) {

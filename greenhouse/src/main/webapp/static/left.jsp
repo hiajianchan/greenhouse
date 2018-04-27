@@ -63,8 +63,8 @@
 
     <dd><div class="title"><span><img src="${pageContext.request.contextPath}/images/leftico03.png" /></span>权限管理</div>
         <ul class="menuson">
-            <li><cite></cite><a href="${pageContext.request.contextPath}/permission"  target="rightFrame">权限信息</a><i></i></li>
-            <li><cite></cite><a href="${pageContext.request.contextPath}/permission/goInsertPer"  target="rightFrame">新增权限</a><i></i></li>
+            <li><cite></cite><a href="${pageContext.request.contextPath}/permission/pageList"  target="rightFrame">权限信息</a><i></i></li>
+            <li><cite></cite><a href="${pageContext.request.contextPath}/permission/toEdit"  target="rightFrame">新增权限</a><i></i></li>
             <%--<li><cite></cite><a href="#">信息列表</a><i></i></li>--%>
             <%--<li><cite></cite><a href="#">其他</a><i></i></li>--%>
         </ul>
