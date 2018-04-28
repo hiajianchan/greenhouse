@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import edu.haut.greenhouse.bean.user.PermissionStatus;
 
@@ -15,6 +16,7 @@ import edu.haut.greenhouse.bean.user.PermissionStatus;
  * @date 2018-04-14
  *
  */
+@Table(name = "permission")
 public class Permission {
 
 	@Id
