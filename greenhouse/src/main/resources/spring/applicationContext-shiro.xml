@@ -56,22 +56,16 @@
         <!-- Shiro连接约束配置,即过滤链的定义 -->
         <property name="filterChainDefinitions">
             <value>
-                <!--&lt;!&ndash;anon 表示匿名访问，不需要认证以及授权&ndash;&gt;-->
-                /WEB-INF/View/Common/login*=anon
-                <!--/goLogin=anon-->
-                <!--/goError=anon-->
-                <!--&lt;!&ndash;authc表示需要认证 没有进行身份认证是不能进行访问的&ndash;&gt;-->
-                <!--/**=authc-->
+            	/main = authc
+            	/user/** = authc
+            	/role/** = authc
+            	/permission/** = authc
+            	/resourceObj/** = authc
                 /css/*=anon
-                /editor/*=anon
                 /images/*=anon
                 /js/*=anon
                 /src/*=anon
                 /static/*=anon
-                <!--/** = user-->
-                /=authc
-                <!--/student=roles[teacher]-->
-                <!--/teacher=perms["user:create"]-->
             </value>
         </property>
     </bean>

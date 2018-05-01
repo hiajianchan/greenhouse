@@ -17,7 +17,6 @@
         })
     </script>
 
-
 </head>
 
 <body style="background:url(${pageContext.request.contextPath}/images/topbg.gif) repeat-x;">

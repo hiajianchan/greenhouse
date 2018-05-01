@@ -1,7 +1,6 @@
 package edu.haut.greenhouse.controller.user;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,16 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-/**
- * 
- * @Description 注册和登录
- * @author chen haijian
- * @date 2018年4月20日
- * @version 1.0
- */
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import edu.haut.greenhouse.common.util.JsonStatus;
 import edu.haut.greenhouse.common.util.JsonUtils;
 import edu.haut.greenhouse.common.util.WebUtils;
@@ -33,6 +24,13 @@ import edu.haut.greenhouse.pojo.user.User;
 import edu.haut.greenhouse.pojo.user.UserInfo;
 import edu.haut.greenhouse.service.user.UserInfoService;
 import edu.haut.greenhouse.service.user.UserService;
+/**
+ * 
+ * @Description 注册和登录
+ * @author chen haijian
+ * @date 2018年5月1日
+ * @version 1.0
+ */
 @Controller
 public class LoginController {
 	
@@ -111,7 +109,7 @@ public class LoginController {
 			if (subject.isAuthenticated()) {
 				
 				//登录成功
-				map.put(JsonStatus.STATUS, JsonStatus.SUCCESS);
+//				map.put(JsonStatus.STATUS, JsonStatus.SUCCESS);
 				//将当前用户放入session
 				Session session = subject.getSession();
 				User record = new User();
@@ -125,7 +123,8 @@ public class LoginController {
 					record1.setUserId(user.getId());
 					UserInfo userInfo = userInfoService.queryOne(record1);
 					session.setAttribute("currUserInfo", userInfo);
-					try {
+					session.setAttribute("loginTime", new Date());
+					/*try {
 						//更新用户的登录信息
 						UserInfo info = new UserInfo();
 						info.setId(userInfo.getId());
@@ -139,10 +138,10 @@ public class LoginController {
 						userInfoService.updateSelective(info);
 					} catch (Exception e) {
 						e.printStackTrace();
-					}
+					}*/
 				}
 				
-				return "/common/main";
+				return "redirect:/main";
 			}
 			
 		} catch (AuthenticationException e) {
@@ -156,13 +155,45 @@ public class LoginController {
 	}
 	
 	/**
+	 * 登录成功
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/main")
+	public String loginSuccess(HttpServletRequest request) {
+		return "/common/main";
+	}
+	
+	/**
 	 * 用户登出
 	 * @return
 	 */
 	@RequestMapping("/logout")
-	public String logout() {
-		Subject sub = SecurityUtils.getSubject();
-        sub.logout();
+	public String logout(HttpServletRequest request) {
+		
+		Subject subject = SecurityUtils.getSubject();
+	
+		//更新用户信息
+		try {
+			Session session = subject.getSession();
+			UserInfo userInfo = (UserInfo) session.getAttribute("currUserInfo");
+			Date loginTime = (Date) session.getAttribute("loginTime");
+			
+			UserInfo info = new UserInfo();
+			info.setId(userInfo.getId());
+			info.setUserId(userInfo.getUserId());
+			info.setLastLogin(loginTime);
+			String realIp = WebUtils.getRealIp(request);
+			info.setLastIp(realIp);
+			Map<Object, Object> ipInfo = WebUtils.getIpInfo(realIp);
+			info.setLastCountry(ipInfo.get("country").toString());
+			info.setLastCity(ipInfo.get("city").toString());
+			userInfoService.updateSelective(info);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		subject.logout();
         
         return "redirect:/goLogin";
 	}

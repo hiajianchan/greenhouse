@@ -274,6 +274,7 @@
 	</dependencies>
   
   <build>
+  	<finalName>greenhouse</finalName>
   	<plugins>
   		<!-- java编译插件 -->
   		<plugin>

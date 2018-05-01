@@ -1,0 +1,633 @@
+.c-w1200 {
+    min-width: 1000px;
+    margin: 0 auto;
+    max-width: 1200px;
+    min-height:30%;
+}
+
+.fl {
+    float: left;
+}
+
+.clear {
+    clear: both;
+    overflow: hidden;
+}
+
+.c-header {
+    min-width: 1000px;
+    height: auto;
+    margin: 5px auto 0px auto;
+}
+
+.c-top1 {
+    height: 40px;
+    line-height: 40px;
+    background: #060F20;
+    overflow: hidden;
+}
+
+.c-fl {
+    float: left;
+}
+
+.c-nav {
+    float: right;
+    margin-top: 10px;
+    margin-right: -20px;
+}
+
+.c-nav li {
+    float: right;
+    width: 100px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-right: solid 1px #515765;
+}
+
+.c-nav li a {
+    color: #fff;
+    vertical-align: middle;
+}
+
+.c-nav li img {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.c-nav li a.active {
+    color: #f00;
+}
+
+.red {
+    color: #f00;
+}
+
+.c-logo {
+    float: left;
+    width: 250px;
+}
+
+.sc-logo {
+    float: left;
+}
+
+.sc-title {
+    margin-top: 24px;
+    position: absolute;
+}
+
+.sc-tab {
+    padding-top: 27px;
+    position: absolute;
+    right: 0px;
+    width: 200px;
+    color: #fff;
+}
+
+.c-logo img {
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-top: 7px;
+    width: 208px;
+}
+
+.c-top2 {
+    min-width: 1000px;
+    height: 80px;
+    clear: both;
+    overflow: hidden;
+    background: #22283E;
+}
+
+.c-menu {
+    float: left;
+    margin-top: 30px;
+    margin-right: 40px;
+}
+
+.c-menu li {
+    float: left;
+    padding: 0 30px;
+    text-align: center;
+}
+
+.c-menu li a {
+    font-size: 16px;
+    color: #fff;
+}
+
+.c-menu li a.active {
+    color: #FFCC03;
+}
+
+/*left*/
+
+.c-left1 {
+    width: 200px;
+    float: left;
+}
+
+.c-left1 .c-tit {
+    font-size: 14px;
+    padding: 10px;
+}
+
+.c-left1 .c-left-nav {
+    min-height: 540px;
+    border: solid 1px #ccc;
+    padding-top: 10px;
+}
+
+.c-left1 .c-left-nav li {
+    padding: 4px 12px;
+}
+
+.c-left1 .c-left-nav li a.active {
+    color: #ff0000;
+}
+
+/*left2*/
+
+.c-left2 {
+    width: 200px;
+    float: left;
+    border: solid 1px #ccc;
+}
+
+.c-left2 .c-tit {
+    font-size: 14px;
+    border-bottom: solid 1px #ccc;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.c-left2 .c-left-nav {
+    min-height: 540px;
+}
+
+.c-left2 .c-left-nav li {
+    height: 60px;
+    line-height: 60px;
+    border-left: 4px solid #fff;
+}
+
+.c-left2 .c-left-nav li a.nthchild {
+    background: url(/static/imgs/icon_ordercenter.png) no-repeat 20px;
+    padding-left: 60px;
+}
+
+.c-left2 .c-left-nav li a.nthsecond {
+    background: url('/static/imgs/icon_accountsetting.png') no-repeat 20px;
+    padding-left: 60px;
+}
+
+.c-left2 .c-left-nav li a {
+    display: inline-block;
+}
+
+.c-left2 .c-left-nav li.selected {
+    background: #f8f8f8;
+    border-left: 4px solid #ffcc03;
+}
+
+/*right*/
+
+.c-right {
+    margin-left: 220px;
+}
+
+.c-r h2 {
+    font-size: 14px;
+    height: 33px;
+    margin-bottom: 15px;
+}
+
+
+.c-r h2.c-title1 {
+    font-size: 14px;
+    height: 22px;
+    border-bottom: solid 1px #ccc;
+}
+
+.c-r h2.c-title1 span {
+    float: left;
+}
+
+.c-r h2.c-title2 {
+    font-size: 16px;
+    border-bottom: solid 1px #ccc;
+}
+
+.pos-r {
+    position: relative;
+}
+
+/*tab*/
+
+.tab {
+    font-size: 14px;
+    height: 22px;
+    border-bottom: solid 1px #ccc;
+}
+
+.tab ul li {
+    float: left;
+    width: 80px;
+    padding: 0 10px;
+}
+
+.tab ul li a {
+    color: #333;
+}
+
+.tab ul li.active a {
+    color: #f00;
+}
+
+/*footer*/
+
+.c-footer {
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    width: 100%;
+    height: 241px;
+    margin: 0px auto;
+    padding: 26px 0 22px 0;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    background: #2D2E32;
+    min-width: 1000px;
+    clear: both;
+    /*cursor: pointer;*/
+}
+
+.c-footer-main {
+    clear: both;
+    overflow: hidden;
+}
+
+.c-footer-main dl {
+    float: left;
+    width: 21%;
+    margin: 0 6%;
+}
+
+.c-footer-main dd a,.c-footer-main dd span {
+    display: block;
+    text-align: left;
+    color: #666;
+    line-height: 30px;
+}
+
+.c-footer-main dd {
+    padding-left: 40px;
+}
+
+.c-footer-main dd a,.c-footer-main dd span {
+    color: #939594;
+}
+
+.c-footer-main dt {
+    font-size: 16px;
+    font-weight: 100;
+    text-align: left;
+    height: 38px;
+    line-height: 30px;
+}
+
+.footer-text {
+    margin-top: 52px;
+}
+
+.footer-text span {
+    padding: 0 45px;
+    font-size: 12px;
+}
+
+.help dt {
+    background: url(/static/imgs/footer_icon_1.png) no-repeat;
+    padding-left: 40px;
+}
+
+.read dt {
+    background: url(/static/imgs/footer_icon_2.png) no-repeat;
+    padding-left: 50px;
+}
+
+.read dd {
+    padding-left: 52px;
+}
+
+.icp {
+    padding-right: 30px;
+}
+
+
+/*cyh*/
+
+.c-content {
+    max-width: 1200px;
+    min-width: 1000px;
+    margin: 0 auto;
+    clear: both;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.c-crumb {
+    height: 50px;
+    line-height: 56px;
+    margin-top: 18px;
+    border-bottom: solid 1px #ccc;
+}
+
+.c-crumb a {
+    color: #5576b9;
+}
+
+.c-choose {
+    height: 48px;
+    line-height: 48px;
+    border-bottom: solid 1px #ccc;
+}
+
+.c-choose .choose-text {
+    float: left;
+    margin-right: 10px;
+}
+
+.c-choose .choose-box {
+    float: left;
+    position: relative;
+    padding: 0px;
+    margin-top: 9px;
+    margin-right: 15px;
+    border: solid 1px #FA933E;
+    padding: 1px 40px 1px 10px;
+    line-height: 26px;
+}
+
+.c-btn-del9,
+.c-btn-del,
+.c-btn-del2,
+.c-btn-del3 {
+    position: absolute;
+    right: 13px;
+    top: 8px;
+}
+
+/*筛选*/
+
+.c-sort-main {
+    clear: both;
+    overflow: hidden;
+    padding-bottom: 10px;
+    margin: 40px 0;
+}
+
+.c-sort-title {
+    float: left;
+}
+
+.c-sort a {
+    margin: 0 26px 0 0;
+}
+
+.c-sort a.active {
+    color: #F26315;
+}
+
+.c-sort {
+    float: right;
+}
+
+.c-sort-list {
+    padding: 2px 0px 15px 0px;
+    margin-top: 15px;
+    clear: both;
+    overflow: hidden;
+    border-bottom: solid 1px #ccc;
+}
+
+.c-sort-list img {
+    float: left;
+    /*width: 30%;*/
+    height: 150px;
+    max-width: 180px;
+    margin-right: 3%;
+}
+
+.bord-bm {
+    border-bottom: solid 1px #ccc;
+    padding-bottom: 6px;
+}
+
+.c-sort-t {
+    clear: both;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.c-sort-title {
+    font-size: 18px;
+}
+
+.c-sort-title span {
+    font-weight: 100;
+    font-size: 14px;
+    color: #666;
+    margin-left: 26px;
+}
+
+.c-sort-list dl {
+    clear: both;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.c-sort-list dl dt {
+    float: left;
+    width: 79%;
+}
+
+.c-sort-list dl dt span a {
+    color: #1F63AC;
+}
+
+.c-sort-list dl dd {
+    float: right;
+}
+
+.c-sort1 dt {
+    color: #1F63AC;
+}
+
+.c-sort1 dt p a {
+    color: #5C76B4;
+    line-height: 24px;
+}
+
+.c-sort1 dd {
+    color: #F26315;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.c-sort2 dt,
+.c-sort2 dd,
+.c-sort3 dd {
+    color: #666666;
+}
+
+.c-sort2 dt span {
+    padding-right: 30px;
+}
+
+.c-sort2 dt span a {
+    margin-left: 10px;
+    color: #999;
+}
+
+.c-sort-list dl.c-sort3 dt a {
+    color: #5C76B4;
+}
+
+/*分页*/
+
+.c-page {
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 98px;
+}
+
+.c-page a {
+    display: inline-block;
+    padding: 7px 13px;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.c-page a.c-page-nobord {
+    border: none;
+}
+
+.c-page a.active {
+    color: #f26315;
+    border: none;
+}
+
+.w40 {
+    width: 40%;
+}
+
+.w20 {
+    width: 20%;
+}
+
+.w18 {
+    width: 18%;
+}
+
+.w16 {
+    width: 16%;
+}
+
+.w14 {
+    width: 14%;
+}
+
+.w12 {
+    width: 12%;
+}
+
+.w10 {
+    width: 10%;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.link-underline {
+    text-decoration: underline;
+}
+
+.language {
+    position: absolute;
+    right: 0px;
+    top: 23px;
+    background: #F7BA00;
+    width: 88px;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.op7 {
+    opacity: .7;
+    filter: alpha(opacity=70);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)"
+}
+
+.c-nav li.login-name {
+    width: 260px;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.error {
+    width: 740px;
+    margin: 10px auto;
+    text-align: center;
+    font-size: 16px;
+}
+
+.error p {
+    text-align: center;
+    margin: 30px 0 70px 0;
+}
+
+.error a {
+    display: block;
+    width: 170px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto;
+    border-radius: 10px;
+    text-align: center;
+    background: #EEBB1A;
+    color: #222
+}
+
+.c-nav {
+    float: right;
+    width: 410px;
+}
+
+#kucun {
+    min-height: 63px;
+}
+
+@media screen and (max-width:1160px) {
+    .c-menu li {
+        padding: 0 26px;
+    }
+}
+
+@media screen and (max-width:1080px) {
+    .c-menu li {
+        padding: 0 22px;
+    }
+}
