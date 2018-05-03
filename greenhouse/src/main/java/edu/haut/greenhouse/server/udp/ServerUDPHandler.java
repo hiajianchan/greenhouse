@@ -1,8 +1,10 @@
 package edu.haut.greenhouse.server.udp;
 
+import java.util.Date;
+
+import edu.haut.greenhouse.common.util.redis.RedisManager;
 import edu.haut.greenhouse.server.websocket.WebsocketConfig;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -43,6 +45,13 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 		String body = new String(req, CharsetUtil.UTF_8);
 		
 		System.out.println("接收到的消息是：" + body);
+		//将数据存到redis
+		try {
+			String key = new Date().toString();
+			key = "tem&hum:"+key;
+			RedisManager.set(key.getBytes(), body.getBytes());
+		} catch (Exception e) {
+		}
 		
 		//通过websocket协议将此消息群发给客户端
 		TextWebSocketFrame tsf = new TextWebSocketFrame(body);
@@ -53,9 +62,9 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 //		ctx.writeAndFlush(new DatagramPacket(
 //				Unpooled.copiedBuffer("received your msg " + System.currentTimeMillis(), CharsetUtil.UTF_8), 
 //				packet.sender())).sync();
-		ctx.writeAndFlush(new DatagramPacket(
-				Unpooled.copiedBuffer("111", CharsetUtil.UTF_8), 
-				packet.sender())).sync();
+//		ctx.writeAndFlush(new DatagramPacket(
+//				Unpooled.copiedBuffer("111", CharsetUtil.UTF_8), 
+//				packet.sender())).sync();
 	}
 	
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {

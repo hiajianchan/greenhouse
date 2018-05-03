@@ -3,14 +3,20 @@ package edu.haut.greenhouse.common.util.redis;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.haut.greenhouse.common.util.JsonUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -216,6 +222,27 @@ public class RedisManager {
 		}
 		
 	}
+    
+    /**
+     * 获取所有的key
+     * @param pattern
+     * @return
+     */
+    public static Set<String> keys(String pattern) {
+    	Jedis jedis = null;
+    	
+    	Set<String> keys = null;
+    	try {
+			jedis = pool.getResource();
+			keys = jedis.keys(pattern);
+		} catch (Exception e) {
+		} finally {
+			 if (jedis != null) {
+				 pool.returnResourceObject(jedis);
+	         }
+		}
+    	return keys;
+    }
 
     /**
      * redis test 
@@ -224,38 +251,39 @@ public class RedisManager {
      * @param args
      */
     public static void main(String[] args) {
-		//RedisManager.set("qinshihuang".getBytes(), "yingzheng".getBytes());
-    	
-    	//RedisManager.set("qinshihuang3".getBytes(), "yingzheng3".getBytes(), 10);
-		//System.out.println(new String(RedisManager.get("qinshihuang3".getBytes())));
 		
-		/*RedisManager.set("appid".getBytes(), "uuid;987654".getBytes());
-		String ss=new String(RedisManager.get("appid".getBytes()));
-		String[] nn=ss.split(";");
-		System.out.println(nn[0]+"-----");
-		System.out.println(nn[1]+"------------");*/
+//    	int i = 0;
+//    	while (i < 200) {
+//		Random random = new Random();
+//		float f = random.nextFloat();
+//		float tem = f * 30;
+//		
+//		float hum = f * 40;
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		Date date = new Date();
+//		String key = date.toString();
+//		key = "tem&hum:" + key; 
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("time", date);
+//		map.put("tem", tem);
+//		map.put("hum", hum);
+//		String json = JsonUtils.toJson(map);
+//
+//		set(key.getBytes(), json.getBytes());
+//		i ++;
+//    	}
+    	Set<String> keys = keys("tem&hum*");
+    	Set<byte[]> keySet = new HashSet<>();
+		for (String str : keys) {
+			keySet.add(str.getBytes());
+		}
 		
-		Jedis jedis = pool.getResource();
-		 
-//		jedis.lpush("apikey".getBytes(), "uuid".getBytes());
-//		jedis.rpush("apikey".getBytes(), "987654".getBytes());
-//		
-//		jedis.expire("apikey".getBytes(), 50);
-//		
-//		System.out.println(new String(jedis.lindex("apikey".getBytes(), 0)));
-//		
-//		System.out.println(new String(jedis.lindex("apikey".getBytes(), 1)));
-//		
-//		jedis.lrem("apikey".getBytes(), 0, "uuid".getBytes());
-//		jedis.lpush("apikey".getBytes(), "uussid".getBytes());
-//		jedis.lrem("apikey".getBytes(), 0, "987654".getBytes());
-//		jedis.rpush("apikey".getBytes(), "333333".getBytes());
-//		System.out.println(new String(jedis.lindex("apikey".getBytes(), 0))+"---");
-//		
-//		System.out.println(new String(jedis.lindex("apikey".getBytes(), 1))+"===");
-		jedis.set("k22", "test1");
-		jedis.get("k22");
-		
-		
+		List<byte[]> list = RedisManager.mget(keySet);
+		System.out.println(list);
 	}
 }

@@ -66,6 +66,7 @@
                 /js/*=anon
                 /src/*=anon
                 /static/*=anon
+                /json/*=anon
             </value>
         </property>
     </bean>
