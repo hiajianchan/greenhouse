@@ -19,8 +19,13 @@
 	
 	</head>
 	<body style="background: #ededed">
-		<div id="nav1"></div>  
-		
+		<div id="nav1">
+			<div id="user_div">
+				<div id="user_info"><font color="white">陈海建 你好，欢迎使用系统</font></div>
+				<div id="out"><a href="#"><font color="white">登出</font></a></div>
+			</div>
+		</div>  
+			
 		<div id="nav2">
 			<div id="nav2_1">
 				<div id="nav2_1_1">您当前所在城市：郑州</div>
@@ -34,11 +39,14 @@
 			</div>
 
 
-			<div id="nav2_2"></div>
+			<div id="nav2_2">
+				<div id="tem_div"></div>
+				<div id="hum_div"></div>
+			</div>
 		</div>
 
-
-
 		<div id="nav3">折线图</div>
+		
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/myjs/index.js"></script>
 	</body>
 </html>

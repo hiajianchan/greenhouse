@@ -6,6 +6,26 @@
 	/*border-radius:0 0 15px 15px;     */
 	margin-bottom: 5px;
 }
+#user_div {
+	height: 60px;
+	width: 25%;
+	float: right;
+	text-align: center;
+	line-height: 60px;
+	background: #8E8E8E;
+}
+
+#user_info {
+	height: 60px;
+	width: 80%;
+	float: left;
+}
+
+#out {
+	height: 60px;
+	width: 19%;
+	float: right;
+}
 
 #nav2 {
 	height: 280px;
@@ -62,6 +82,20 @@
 	float: right;
 	background: #fff;
 	border: 1px solid #DCDCDC;
+}
+
+#tem_div{
+	height:280px;
+	width:50%;
+	float:left;
+	text-align:center;
+	line-height: 280px;
+}
+
+#hum_div{
+	height:280px;
+	width:50%;
+	float:right;
 }
 
 #nav3 {
