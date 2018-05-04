@@ -97,8 +97,7 @@ public class MyWebSocketHandler extends SimpleChannelInboundHandler<Object> {
 		// 获取客户端向服务端发送的消息
 		String request = ((TextWebSocketFrame) frame).text();
 		System.out.println("服务端收到客户端的消息====>>>" + request);
-		TextWebSocketFrame tws = new TextWebSocketFrame(
-				new Date().toString() + ctx.channel().id() + " ===>>> " + request);
+		TextWebSocketFrame tws = new TextWebSocketFrame(request);
 		// 群发，服务端向每个连接上来的客户端群发消息
 		WebsocketConfig.group.writeAndFlush(tws);
 	}

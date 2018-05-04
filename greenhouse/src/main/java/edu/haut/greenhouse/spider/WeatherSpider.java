@@ -27,8 +27,8 @@ public class WeatherSpider {
 	private WeatherCityMapper weatherCityMapper;
 	
 	public List<Weather> getWeather(String cityname) {
-		String code = getCityCode(cityname);
-//		String code = "101180101";
+//		String code = getCityCode(cityname);
+		String code = "101180101";
 		String url = "http://www.weather.com.cn/weather/" + code + ".shtml";
 	
 		List<Weather> weaList = null;
@@ -54,6 +54,15 @@ public class WeatherSpider {
 				
 				String tem = item.getElementsByClass("tem").get(0).text();  //温度
 				weather.setTem(tem);
+				
+				Elements bigs = item.getElementsByTag("big");
+				if (bigs.size() > 0) {
+					weather.setImg1(bigs.get(0).attr("class"));
+				}
+				if (bigs.size() >1) {
+					weather.setImg2(bigs.get(1).attr("class"));
+				}
+				
 				weaList.add(weather);
 				i++;
 				
@@ -88,6 +97,7 @@ public class WeatherSpider {
 	
 	public static void main(String[] args) {
 		WeatherSpider spider = new WeatherSpider();
-		spider.getWeather("郑州");
+		List<Weather> list = spider.getWeather("郑州");
+		System.out.println(list);
 	}
 }

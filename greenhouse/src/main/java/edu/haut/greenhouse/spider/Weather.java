@@ -13,7 +13,9 @@ public class Weather {
 	
 	private String tem;
 	
-	private String img;
+	private String img1;
+	
+	private String img2;
 
 	public String getDate() {
 		return date;
@@ -39,17 +41,26 @@ public class Weather {
 		this.tem = tem;
 	}
 
-	public String getImg() {
-		return img;
+	public String getImg1() {
+		return img1;
 	}
 
-	public void setImg(String img) {
-		this.img = img;
+	public void setImg1(String img1) {
+		this.img1 = img1;
+	}
+
+	public String getImg2() {
+		return img2;
+	}
+
+	public void setImg2(String img2) {
+		this.img2 = img2;
 	}
 
 	@Override
 	public String toString() {
-		return "Weather [date=" + date + ", wea=" + wea + ", tem=" + tem + ", img=" + img + "]";
+		return "Weather [date=" + date + ", wea=" + wea + ", tem=" + tem + ", img1=" + img1 + ", img2=" + img2 + "]";
 	}
 
+	
 }

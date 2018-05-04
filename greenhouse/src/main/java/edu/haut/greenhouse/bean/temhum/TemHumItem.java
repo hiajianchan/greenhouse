@@ -6,6 +6,7 @@ package edu.haut.greenhouse.bean.temhum;
  * @version 1.0
  */
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class TemHumItem {
@@ -14,10 +15,10 @@ public class TemHumItem {
 	private Date time;
 	
 	//温度
-	private Double tem;
+	private BigDecimal tem;
 	
 	//湿度
-	private Double hum;
+	private BigDecimal hum;
 
 	public Date getTime() {
 		return time;
@@ -27,19 +28,19 @@ public class TemHumItem {
 		this.time = time;
 	}
 
-	public double getTem() {
+	public BigDecimal getTem() {
 		return tem;
 	}
 
-	public void setTem(double tem) {
+	public void setTem(BigDecimal tem) {
 		this.tem = tem;
 	}
 
-	public double getHum() {
+	public BigDecimal getHum() {
 		return hum;
 	}
 
-	public void setHum(double hum) {
+	public void setHum(BigDecimal hum) {
 		this.hum = hum;
 	}
 

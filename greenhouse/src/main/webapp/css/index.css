@@ -45,6 +45,7 @@
 	height: 36px;
 	width: 100%;
 	line-height: 36px;
+	text-align: center;
 	background: #F0F0F0;
 	border: 1px solid #DCDCDC;
 }
@@ -71,9 +72,37 @@
 	float: right;
 }
 
-#weather {
+#weather_div {
 	height: 124px;
 	width: 100%;
+	text-align:center;
+	line-height: 124px;
+}
+
+.wea_div {
+	height: 124px;
+	width: 33%;
+	float:left;
+	text-align:center;
+	line-height: 124px;
+}
+.wea_date {
+	height: 31px;
+	width: 100%;
+	text-align:center;
+	line-height: 31px;
+}
+.wea_wea {
+	height: 62px;
+	width: 100%;
+	text-align:center;
+	line-height: 62px;
+}
+.wea_tem {
+	height: 31px;
+	width: 100%;
+	text-align:center;
+	line-height: 31px;
 }
 
 #nav2_2 {
@@ -104,6 +133,35 @@
 	background: #fff;
 	margin-top: 5px;
 	border: 1px solid #DCDCDC;
+}
+
+#nav3_1 {
+	height: 36px;
+	width: 100%;
+	background:#F0F0F0;
+	text-align:center;
+	line-height: 36px;
+}
+
+#data_info {
+	height: 36px;
+	width: 50px;
+	float: left;
+	text-align:center;
+	line-height: 36px;
+}
+#data_btn {
+	height: 36px;
+	width: 32%;
+	float: right;
+	text-align:center;
+	line-height: 36px;
+}
+#data_area {
+	height: 214px;
+	width:100%;
+	text-align:center;
+	line-height: 214px;
 }
 
 /*当前时间的显示*/

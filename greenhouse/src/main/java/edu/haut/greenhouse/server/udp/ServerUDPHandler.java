@@ -1,7 +1,10 @@
 package edu.haut.greenhouse.server.udp;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
+import edu.haut.greenhouse.bean.temhum.TemHumItem;
+import edu.haut.greenhouse.common.util.JsonUtils;
 import edu.haut.greenhouse.common.util.redis.RedisManager;
 import edu.haut.greenhouse.server.websocket.WebsocketConfig;
 import io.netty.buffer.ByteBuf;
@@ -45,17 +48,34 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 		String body = new String(req, CharsetUtil.UTF_8);
 		
 		System.out.println("接收到的消息是：" + body);
-		//将数据存到redis
-		try {
-			String key = new Date().toString();
-			key = "tem&hum:"+key;
-			RedisManager.set(key.getBytes(), body.getBytes());
-		} catch (Exception e) {
+		
+		if (body !=null) {
+			String[] temAndHum = body.split(",");
+			if (temAndHum.length == 2) {
+				BigDecimal tem = new BigDecimal(temAndHum[0]).setScale(2, BigDecimal.ROUND_HALF_UP);
+				BigDecimal hum = new BigDecimal(temAndHum[1]).setScale(2, BigDecimal.ROUND_HALF_UP);
+				
+				//将数据存到redis
+				try {
+					Date date = new Date();
+					String key = "tem&hum:"+ date.toString();
+					TemHumItem item = new TemHumItem();
+					item.setHum(hum);
+					item.setTem(tem);
+					item.setTime(date);
+					String value = JsonUtils.toJson(item);
+					RedisManager.set(key.getBytes(), value.getBytes());
+				} catch (Exception e) {
+				}
+				//通过websocket协议将此消息群发给客户端
+				TextWebSocketFrame tsf = new TextWebSocketFrame(tem+","+hum);
+				WebsocketConfig.group.writeAndFlush(tsf);
+			}
 		}
 		
-		//通过websocket协议将此消息群发给客户端
-		TextWebSocketFrame tsf = new TextWebSocketFrame(body);
-		WebsocketConfig.group.writeAndFlush(tsf);
+		
+		
+		
 		
 		
 		//回复一条消息给客户端
