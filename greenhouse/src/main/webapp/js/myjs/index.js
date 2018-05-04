@@ -110,7 +110,7 @@ if(!window.WebSocket){
 }
 
 if(window.WebSocket){
-	socket = new WebSocket("ws://127.0.0.1:1125/websocket");
+	socket = new WebSocket("ws://39.106.184.51:1125/websocket");
 	socket.onmessage = function(event){
 		var tem = event.data.split(',')[0];
 		var hum = event.data.split(',')[1];
