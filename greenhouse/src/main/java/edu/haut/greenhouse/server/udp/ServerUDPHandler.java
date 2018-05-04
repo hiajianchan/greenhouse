@@ -3,9 +3,13 @@ package edu.haut.greenhouse.server.udp;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.annotation.Resource;
+
 import edu.haut.greenhouse.bean.temhum.TemHumItem;
 import edu.haut.greenhouse.common.util.JsonUtils;
 import edu.haut.greenhouse.common.util.redis.RedisManager;
+import edu.haut.greenhouse.mapper.temhum.TemAndHumMapper;
+import edu.haut.greenhouse.pojo.temhum.TemAndHum;
 import edu.haut.greenhouse.server.websocket.WebsocketConfig;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -22,6 +26,9 @@ import io.netty.util.CharsetUtil;
  */
 @Sharable
 public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
+	
+	@Resource
+	private TemAndHumMapper temAndHumMapper;
 
 	public ServerUDPHandler() {
 		super();
@@ -48,16 +55,26 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 		String body = new String(req, CharsetUtil.UTF_8);
 		
 		System.out.println("接收到的消息是：" + body);
-		
+		Date date = new Date();
 		if (body !=null) {
 			String[] temAndHum = body.split(",");
 			if (temAndHum.length == 2) {
 				BigDecimal tem = new BigDecimal(temAndHum[0]).setScale(2, BigDecimal.ROUND_HALF_UP);
 				BigDecimal hum = new BigDecimal(temAndHum[1]).setScale(2, BigDecimal.ROUND_HALF_UP);
 				
+				try {
+					//将数据存到mysql
+					TemAndHum th = new TemAndHum();
+					th.setCreateTime(date);
+					th.setHum(hum);
+					th.setTem(tem);
+					temAndHumMapper.insert(th);
+				} catch (Exception e1) {
+				}
+				
 				//将数据存到redis
 				try {
-					Date date = new Date();
+					
 					String key = "tem&hum:"+ date.toString();
 					TemHumItem item = new TemHumItem();
 					item.setHum(hum);

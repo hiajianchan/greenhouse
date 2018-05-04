@@ -61,6 +61,7 @@
             	/role/** = authc
             	/permission/** = authc
             	/resourceObj/** = authc
+            	/index = authc
                 /css/*=anon
                 /images/*=anon
                 /js/*=anon
