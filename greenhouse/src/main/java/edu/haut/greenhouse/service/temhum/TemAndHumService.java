@@ -20,5 +20,9 @@ public interface TemAndHumService extends BaseService<TemAndHum> {
 	 */
 	List<TemHumItem> getToday();
 	
-	
+	/**
+	 * 插入数据
+	 * @param temAndHum
+	 */
+	void insertData(TemAndHum temAndHum);
 }

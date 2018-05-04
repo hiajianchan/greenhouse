@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.haut.greenhouse.bean.temhum.TemHumItem;
 import edu.haut.greenhouse.common.util.JsonUtils;
 import edu.haut.greenhouse.common.util.redis.RedisManager;
+import edu.haut.greenhouse.mapper.temhum.TemAndHumMapper;
 import edu.haut.greenhouse.pojo.temhum.TemAndHum;
 import edu.haut.greenhouse.service.BaseService;
 import edu.haut.greenhouse.service.BaseServiceImpl;
@@ -27,6 +30,9 @@ import edu.haut.greenhouse.service.BaseServiceImpl;
 @Service
 public class TemAndHumServiceImpl extends BaseServiceImpl<TemAndHum> implements TemAndHumService {
 
+	@Autowired
+	private TemAndHumMapper mapper;
+	
 	@Override
 	public List<TemHumItem> getToday() {
 		Set<String> keys = RedisManager.keys("tem&hum*");
@@ -78,6 +84,12 @@ public class TemAndHumServiceImpl extends BaseServiceImpl<TemAndHum> implements 
 				return 0;
 			}
 		});
+	}
+
+	@Override
+	public void insertData(TemAndHum temAndHum) {
+		temAndHum.setCreateTime(new Date());
+		mapper.insert(temAndHum);
 	}
 	
 }

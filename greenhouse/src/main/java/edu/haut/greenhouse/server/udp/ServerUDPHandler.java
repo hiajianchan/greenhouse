@@ -11,6 +11,7 @@ import edu.haut.greenhouse.common.util.redis.RedisManager;
 import edu.haut.greenhouse.mapper.temhum.TemAndHumMapper;
 import edu.haut.greenhouse.pojo.temhum.TemAndHum;
 import edu.haut.greenhouse.server.websocket.WebsocketConfig;
+import edu.haut.greenhouse.service.temhum.TemAndHumService;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -28,7 +29,7 @@ import io.netty.util.CharsetUtil;
 public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 	
 	@Resource
-	private TemAndHumMapper temAndHumMapper;
+	private TemAndHumService temAndHumService;
 
 	public ServerUDPHandler() {
 		super();
@@ -68,7 +69,7 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 					th.setCreateTime(date);
 					th.setHum(hum);
 					th.setTem(tem);
-					temAndHumMapper.insert(th);
+					temAndHumService.insertData(th);
 				} catch (Exception e1) {
 				}
 				
