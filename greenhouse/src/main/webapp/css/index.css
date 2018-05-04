@@ -3,28 +3,54 @@
 	width: 100%;
 	line-height: 80px;
 	background: #fff;
-	/*border-radius:0 0 15px 15px;     */
+	/* border-radius:0 0 15px 15px; */
 	margin-bottom: 5px;
 }
+#log_div {
+	height: 60px;
+	width:20%;
+	float: left;
+	text-align: center;
+	line-height: 60px;
+	background: #5B5B5B;
+	border-radius:15px 15px 15px 15px;
+}
+
+#manage_div {
+	height: 60px;
+	width: 10%;
+	margin-left: 10px;
+	float: left;
+	text-align: center;
+	line-height: 60px;
+	border-right: 1px solid #DCDCDC;
+	border-left: 1px solid #DCDCDC;
+	
+}
+
 #user_div {
 	height: 60px;
 	width: 25%;
 	float: right;
 	text-align: center;
 	line-height: 60px;
-	background: #8E8E8E;
+	
+	
 }
 
 #user_info {
 	height: 60px;
 	width: 80%;
 	float: left;
+	background: #5B5B5B;
+	border-radius:15px 0 0 15px;
 }
 
 #out {
 	height: 60px;
 	width: 19%;
 	float: right;
+	background: #ADADAD;
 }
 
 #nav2 {
@@ -154,6 +180,13 @@
 	height: 36px;
 	width: 32%;
 	float: right;
+	text-align:center;
+	line-height: 36px;
+}
+.btn_by_date {
+	height: 36px;
+	width: 25%;
+	float: left;
 	text-align:center;
 	line-height: 36px;
 }

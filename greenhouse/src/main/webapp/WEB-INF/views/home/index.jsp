@@ -15,7 +15,10 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/myjs/index.js"></script>
 		
 		<script type="text/javascript">
-		 	var cityName='北京';		
+		 	var cityName= '${cityName}';
+			if (cityName == '' ||cityName == '内网IP') {
+				cityName ="郑州";
+			}
 		</script>
 	
 	</head>
@@ -31,12 +34,14 @@
 			</div>
 			
 			<div id="manage_div">
-				<a href="#"><img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" height="60px" width="60px;"></a>
+				<a href="${pageContext.request.contextPath}/main" title="进入后台">
+					<img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" height="60px" width="60px;">
+				</a>
 			</div>
 			
 			<div id="user_div">
-				<div id="user_info"><font color="white">陈海建 你好，欢迎使用系统</font></div>
-				<div id="out"><a href="#"><font color="white">登出</font></a></div>
+				<div id="user_info"><font color="white">${currUser.name } 你好，欢迎使用系统</font></div>
+				<div id="out"><a href="${pageContext.request.contextPath}/logout"><font color="white">登出</font></a></div>
 			</div>
 		</div>  
 			

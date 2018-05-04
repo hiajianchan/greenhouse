@@ -3,7 +3,7 @@
  * 画出地图
  */
 
-var cityCode = cityMap['郑州']
+var cityCode = cityMap[cityName]
 var mapUrl = "/json/citys/" + cityCode + ".json";
 			
 $.get(mapUrl, function(geoJson) {

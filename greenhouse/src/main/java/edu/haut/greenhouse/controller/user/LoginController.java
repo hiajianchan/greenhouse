@@ -141,7 +141,7 @@ public class LoginController {
 					}*/
 				}
 				
-				return "redirect:/main";
+				return "redirect:/index";
 			}
 			
 		} catch (AuthenticationException e) {
