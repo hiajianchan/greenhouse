@@ -119,21 +119,7 @@ day_data_option = {
 	},
 	tooltip : {
 		trigger : 'axis',
-		formatter: function (params) {
-	        params = params[0];
-	        var date = new Date(params.name);
-	        
-	        var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-	        var second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-	        
-	        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + 
-	        date.getDate() + " " + date.getHours() + ":"+ minute + ":" + second + 
-	        
-	        '   val:' + params.value[1];
-	    },
-	    axisPointer: {
-            animation: false
-        }
+		
 	},
 	legend : {
 		data : [ '温度', '湿度' ]

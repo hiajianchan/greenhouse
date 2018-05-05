@@ -26,7 +26,7 @@
     <div class="welinfo">
     <span><img src="${pageContext.request.contextPath}/images/sun.png" alt="天气" /></span>
     <b>${currUser.name }  您好，欢迎使用信息管理系统</b>
-    <a href="#">帐号设置</a>
+
     </div>
     
     <div class="welinfo">

@@ -67,6 +67,6 @@
 </div>
 
 
-<div class="loginbm">大路网络IMS仓储管理系统</div>
+<div class="loginbm">温湿度监测平台</div>
 </body>
 </html>

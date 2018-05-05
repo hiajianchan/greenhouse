@@ -22,7 +22,7 @@
 <body style="background:url(${pageContext.request.contextPath}/images/topbg.gif) repeat-x;">
 
 <div class="topleft">
-    <a href="${pageContext.request.contextPath}/goMain" target="_parent"><img
+    <a href="${pageContext.request.contextPath}/main" target="_parent"><img
             src="${pageContext.request.contextPath}/images/logo.png" title="系统首页"/></a>
 </div>
 
@@ -36,9 +36,9 @@
     <li><a href="${pageContext.request.contextPath}/permission/pageList" target="rightFrame"><img
             src="${pageContext.request.contextPath}/images/icon03.png" title="权限管理"/>
         <h2>权限管理</h2></a></li>
-    <%--<li><a href="../WEB-INF/View/tools.jsp" target="rightFrame"><img--%>
-            <%--src="${pageContext.request.contextPath}/images/icon04.png" title="常用工具"/>--%>
-        <%--<h2>常用工具</h2></a></li>--%>
+    <li><a href="${pageContext.request.contextPath}/index" target="_parent"><img
+            src="${pageContext.request.contextPath}/images/index_logo.png" title="监测平台" width="45px" height="45px"/>
+        <h2>监测平台</h2></a></li>
     <%--<li><a href="../WEB-INF/View/computer.jsp" target="rightFrame"><img--%>
             <%--src="${pageContext.request.contextPath}/images/icon05.png" title="文件管理"/>--%>
         <%--<h2>文件管理</h2></a></li>--%>

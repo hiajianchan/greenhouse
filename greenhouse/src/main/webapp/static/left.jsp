@@ -42,8 +42,7 @@
             <span><img src="${pageContext.request.contextPath}/images/leftico01.png" /></span>用户管理
         </div>
         <ul class="menuson">
-            <li><cite></cite><a href="${pageContext.request.contextPath}/goIndex" target="rightFrame">首页</a><i></i></li>
-            <li class="active"><cite></cite><a href="${pageContext.request.contextPath}/user/pageList" target="rightFrame">用户信息</a><i></i></li>
+            <li ><cite></cite><a href="${pageContext.request.contextPath}/user/pageList" target="rightFrame">用户信息</a><i></i></li>
             <li><cite></cite><a href="${pageContext.request.contextPath}/user/toEdit" target="rightFrame">新增用户</a><i></i></li>
         </ul>
     </dd>

@@ -82,13 +82,13 @@
 						<a href="javascript:void(0)" id="today_temhum_data"><font size="4px">今天</font></a>
 					</div>
 					<div class="btn_by_date">
-						<a href="#"><font size="4px">本周</font></a>
+						<a href="javascript:void(0)"><font size="4px">本周</font></a>
 					</div>
 					<div class="btn_by_date">
-						<a href="#"><font size="4px">本月</font></a>
+						<a href="javascript:void(0)"><font size="4px">本月</font></a>
 					</div>
 					<div class="btn_by_date">
-						<a href="#"><font size="4px">本年</font></a>
+						<a href="javascript:void(0)"><font size="4px">本年</font></a>
 					</div>
 				</div>
 			</div>
@@ -150,10 +150,25 @@
 		},
 	});
 	
+	$.ajax({
+		type: "GET",
+		url : "/temhum/todayData",
+		dataType : "json",
+		success : function(result) {
+			if (result['status'] == 200) {
+				//请求成功
+				day_data_option.series[0].data = result['temData'];
+				day_data_option.series[1].data = result['humData'];
+				chartDay_data.setOption(day_data_option, true);
+			}
+		}
+		
+	});
 	
 	
 	//点击获取今天的数据
-	//$('#today_temhum_data').click(function(){
+	
+	$('#today_temhum_data').click(function(){
 
 		$.ajax({
 			type: "GET",
@@ -162,8 +177,8 @@
 			success : function(result) {
 				if (result['status'] == 200) {
 					//请求成功
-					console.log(result['temData']);
-					console.log(result['humData']);
+					//console.log(result['temData']);
+					//console.log(result['humData']);
 					day_data_option.series[0].data = result['temData'];
 					day_data_option.series[1].data = result['humData'];
 					chartDay_data.setOption(day_data_option, true);
@@ -171,7 +186,7 @@
 			}
 			
 		});
-//	});
+	});
 	
 	</script>
 </html>
