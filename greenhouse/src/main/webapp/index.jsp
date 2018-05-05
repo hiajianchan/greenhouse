@@ -23,7 +23,7 @@
 		<div id="nav1">
 			<div id="log_div">
 				<div style="height:100%;float:left;">
-					<img src="${pageContext.request.contextPath}/images/index_logo.png" height="60px" width="60px;"/>
+					<img src="${pageContext.request.contextPath}/images/index_logo.png" height="40px" width="40px;"/>
 				</div>
 				<div style="float:left;">
 						<font style="font-size:20px; color:white;">温室环境监测系统</font>
@@ -31,7 +31,7 @@
 			</div>
 			
 			<div id="manage_div">
-				<a href="#"><img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" height="60px" width="60px;"></a>
+				<a href="#"><img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" height="40px" width="40px;"></a>
 			</div>
 			
 			<div id="user_div">

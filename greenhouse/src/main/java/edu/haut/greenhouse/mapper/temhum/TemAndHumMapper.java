@@ -11,4 +11,9 @@ import edu.haut.greenhouse.pojo.temhum.TemAndHum;
  */
 public interface TemAndHumMapper extends Mapper<TemAndHum> {
 
+	/**
+	 * 获取最近的一条数据
+	 * @return
+	 */
+	TemAndHum selectLateData();
 }

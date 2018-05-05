@@ -100,6 +100,94 @@ chartHum.setOption(hum_option, true);
 //	chartHum.setOption(hum_option, true);
 //}, 2000);
 
+
+/**
+ * 画出当天温度和湿度
+ */
+
+var anchor = [
+    {name:'2018-05-05 00:00:00', value:['2018-05-05 00:00:00', 0]},
+    {name:'2018-05-06 00:00:00', value:['2018-05-06 00:00:00', 0]}
+    ];
+var chartDay_data = echarts.init(document.getElementById('data_area'));
+day_data_option = {
+	title : {
+		text : '今日数据',
+		textStyle: {
+			fontSize: 14
+		}
+	},
+	tooltip : {
+		trigger : 'axis',
+		formatter: function (params) {
+	        params = params[0];
+	        var date = new Date(params.name);
+	        
+	        var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+	        var second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+	        
+	        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + 
+	        date.getDate() + " " + date.getHours() + ":"+ minute + ":" + second + 
+	        
+	        '   val:' + params.value[1];
+	    },
+	    axisPointer: {
+            animation: false
+        }
+	},
+	legend : {
+		data : [ '温度', '湿度' ]
+	},
+	grid : {
+		left : '20%',
+		right : '20%',
+		top:'10%',
+		bottom : '2%',
+		containLabel : true
+	},
+	toolbox : {
+		feature : {
+			saveAsImage : {}
+		}
+	},
+	xAxis : {
+		type : 'time',
+		splitLine: {
+	        show: false
+	    }
+	},
+	yAxis : {
+		type : 'value',
+		splitLine: {
+	        show: true
+	    }
+	},
+	series : [ {
+		name : '温度',
+		type : 'line',
+	    showSymbol: false,
+	    hoverAnimation: false,
+	    data: {}
+	}, {
+		name : '湿度',
+		type : 'line',
+		showSymbol: false,
+		hoverAnimation: false,
+		data: {}
+	}, 
+	{
+        name:'.anchor',
+        type:'line', 
+        showSymbol:false, 
+        data:anchor,
+        itemStyle:{normal:{opacity:0}},
+        lineStyle:{normal:{opacity:0}}
+    }
+	]
+};
+
+
+
 /**
  * websocket 显示实时温湿度数据
  */
@@ -134,56 +222,7 @@ if(window.WebSocket){
 	alert("您的浏览器不支持WebSocket");
 }
 
-/**
- * 画出当天温度和湿度
- */
-var chartDay_data = echarts.init(document.getElementById('data_area'));
-day_data_option = {
-	title : {
-		text : '本周数据',
-		textStyle: {
-			fontSize: 14
-		}
-	},
-	tooltip : {
-		trigger : 'axis'
-	},
-	legend : {
-		data : [ '温度', '湿度' ]
-	},
-	grid : {
-		left : '20%',
-		right : '20%',
-		top:'10%',
-		bottom : '3%',
-		containLabel : true
-	},
-	toolbox : {
-		feature : {
-			saveAsImage : {}
-		}
-	},
-	xAxis : {
-		type : 'category',
-		boundaryGap : false,
-		data : [ '周一', '周二', '周三', '周四', '周五', '周六', '周日' ]
-	},
-	yAxis : {
-		type : 'value'
-	},
-	series : [ {
-		name : '温度',
-		type : 'line',
-		stack : '总量',
-		data : [ 120, 132, 101, 134, 90, 230, 210 ]
-	}, {
-		name : '湿度',
-		type : 'line',
-		stack : '总量',
-		data : [ 220, 182, 191, 234, 290, 330, 310 ]
-	}, ]
-};
-chartDay_data.setOption(day_data_option, true);
+
 /*
  * 显示实时时间
  */

@@ -1,45 +1,45 @@
 #nav1 {
-	height: 60px;
+	height: 40px;
 	width: 100%;
-	line-height: 80px;
+	text-align: center;
+	line-height: 40px;
+
 	background: #fff;
 	/* border-radius:0 0 15px 15px; */
 	margin-bottom: 5px;
 }
 #log_div {
-	height: 60px;
+	height: 100%;
 	width:20%;
 	float: left;
 	text-align: center;
-	line-height: 60px;
+	
 	background: #5B5B5B;
 	border-radius:15px 15px 15px 15px;
 }
 
 #manage_div {
-	height: 60px;
+	height: 100%;
 	width: 10%;
 	margin-left: 10px;
 	float: left;
 	text-align: center;
-	line-height: 60px;
+
 	border-right: 1px solid #DCDCDC;
 	border-left: 1px solid #DCDCDC;
 	
 }
 
 #user_div {
-	height: 60px;
+	height: 100%;
 	width: 25%;
 	float: right;
 	text-align: center;
-	line-height: 60px;
-	
-	
+
 }
 
 #user_info {
-	height: 60px;
+	height: 100%;
 	width: 80%;
 	float: left;
 	background: #5B5B5B;
@@ -47,7 +47,7 @@
 }
 
 #out {
-	height: 60px;
+	height: 100%;
 	width: 19%;
 	float: right;
 	background: #ADADAD;
@@ -155,46 +155,46 @@
 
 #nav3 {
 	width: 100%;
-	height: 250px;
+	height: 288px;
 	background: #fff;
 	margin-top: 5px;
 	border: 1px solid #DCDCDC;
 }
 
 #nav3_1 {
-	height: 36px;
+	height: 30px;
 	width: 100%;
 	background:#F0F0F0;
 	text-align:center;
-	line-height: 36px;
+	line-height: 30px;
 }
 
 #data_info {
-	height: 36px;
+	height: 30px;
 	width: 50px;
 	float: left;
 	text-align:center;
-	line-height: 36px;
+	line-height: 30px;
 }
 #data_btn {
-	height: 36px;
+	height: 30px;
 	width: 32%;
 	float: right;
 	text-align:center;
-	line-height: 36px;
+	line-height: 30px;
 }
 .btn_by_date {
-	height: 36px;
+	height: 30px;
 	width: 25%;
 	float: left;
 	text-align:center;
-	line-height: 36px;
+	line-height: 30px;
 }
 #data_area {
-	height: 214px;
+	height: 258px;
 	width:100%;
 	text-align:center;
-	line-height: 214px;
+	line-height: 258px;
 }
 
 /*当前时间的显示*/

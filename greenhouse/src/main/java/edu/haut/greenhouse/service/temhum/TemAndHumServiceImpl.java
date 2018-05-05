@@ -1,7 +1,8 @@
 package edu.haut.greenhouse.service.temhum;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -12,12 +13,15 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.haut.greenhouse.bean.temhum.TemHumItem;
+import com.github.abel533.entity.Example;
+import com.github.abel533.entity.Example.Criteria;
+
+import edu.haut.greenhouse.common.util.DateUtil;
 import edu.haut.greenhouse.common.util.JsonUtils;
+import edu.haut.greenhouse.common.util.StringUtil;
 import edu.haut.greenhouse.common.util.redis.RedisManager;
 import edu.haut.greenhouse.mapper.temhum.TemAndHumMapper;
 import edu.haut.greenhouse.pojo.temhum.TemAndHum;
-import edu.haut.greenhouse.service.BaseService;
 import edu.haut.greenhouse.service.BaseServiceImpl;
 
 /**
@@ -34,7 +38,7 @@ public class TemAndHumServiceImpl extends BaseServiceImpl<TemAndHum> implements 
 	private TemAndHumMapper mapper;
 	
 	@Override
-	public List<TemHumItem> getToday() {
+	public List<TemAndHum> getTodayFromRedis() {
 		Set<String> keys = RedisManager.keys("tem&hum*");
 		
 		Set<byte[]> keySet = new HashSet<>();
@@ -44,10 +48,10 @@ public class TemAndHumServiceImpl extends BaseServiceImpl<TemAndHum> implements 
 		
 		List<byte[]> list = RedisManager.mget(keySet);
 		
-		List<TemHumItem> result = new ArrayList<>();
+		List<TemAndHum> result = new ArrayList<>();
 		for (byte[] val : list) {
 			String json = new String(val);
-			TemHumItem item = JsonUtils.fromJson(json, TemHumItem.class);
+			TemAndHum item = JsonUtils.fromJson(json, TemAndHum.class);
 			result.add(item);
 		}
 		
@@ -59,26 +63,54 @@ public class TemAndHumServiceImpl extends BaseServiceImpl<TemAndHum> implements 
 		return result;
 	}
 	
+	@Override
+	public List<TemAndHum> getDayDataFromMysql(String date) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		if (date == null || !StringUtil.isNotEmpty(date)) {
+			return null;
+		}
+		
+		Date today = DateUtil.fomatDate("2018-05-05", "yyyy-MM-dd");
+    	
+    	Calendar calendar = Calendar.getInstance();
+		calendar.setTime(today);
+		calendar.add(Calendar.DATE, 1);
+		Date time = calendar.getTime();
+		String nextDay = sdf.format(time);
+		
+		Example example = new Example(TemAndHum.class);
+		Criteria criteria = example.createCriteria();
+		criteria.andGreaterThan("createTime", today);
+		criteria.andLessThan("createTime", nextDay);
+		List<TemAndHum> result = mapper.selectByExample(example);
+		
+		sortByTime(result);
+		
+		return result;
+	}
+	
 	/**
 	 * 按照时间排序
 	 * @param result
 	 */
-	public void sortByTime(List<TemHumItem> result) {
-		Collections.sort(result, new Comparator<TemHumItem>() {
+	public void sortByTime(List<TemAndHum> result) {
+		Collections.sort(result, new Comparator<TemAndHum>() {
 
 			@Override
-			public int compare(TemHumItem o1, TemHumItem o2) {
-				if (o1.getTime() == null || o2.getTime() == null) {
-					if (o1.getTime() == null) {
+			public int compare(TemAndHum o1, TemAndHum o2) {
+				if (o1.getCreateTime() == null || o2.getCreateTime() == null) {
+					if (o1.getCreateTime() == null) {
 						return -1;
 					} else {
 						return 1;
 					}
 				}
-				if (o1.getTime().getTime() < o2.getTime().getTime()) {
+				if (o1.getCreateTime().getTime() < o2.getCreateTime().getTime()) {
 					return -1;
 				} 
-				if (o1.getTime().getTime() > o2.getTime().getTime()) {
+				if (o1.getCreateTime().getTime() > o2.getCreateTime().getTime()) {
 					return 1;
 				}
 				return 0;
@@ -91,5 +123,11 @@ public class TemAndHumServiceImpl extends BaseServiceImpl<TemAndHum> implements 
 		temAndHum.setCreateTime(new Date());
 		mapper.insert(temAndHum);
 	}
+
+	@Override
+	public TemAndHum selectLateData() {
+		return mapper.selectLateData();
+	}
+
 	
 }

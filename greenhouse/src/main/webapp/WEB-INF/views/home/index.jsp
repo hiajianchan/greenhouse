@@ -26,7 +26,7 @@
 		<div id="nav1">
 			<div id="log_div">
 				<div style="height:100%;float:left;">
-					<img src="${pageContext.request.contextPath}/images/index_logo.png" height="60px" width="60px;"/>
+					<img src="${pageContext.request.contextPath}/images/index_logo.png" height="40px" width="40px;"/>
 				</div>
 				<div style="float:left;">
 						<font style="font-size:20px; color:white;">温室环境监测系统</font>
@@ -35,7 +35,7 @@
 			
 			<div id="manage_div">
 				<a href="${pageContext.request.contextPath}/main" title="进入后台">
-					<img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" height="60px" width="60px;">
+					<img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" height="40px" width="40px;">
 				</a>
 			</div>
 			
@@ -52,7 +52,7 @@
 						<img src="${pageContext.request.contextPath}/images/earth55.png" height="36px" width="36px;"/>
 					</div>
 					<div style="float:left;">
-						<font>您当前所在城市：郑州</font>
+						<font>您当前所在城市：${cityName}</font>
 					</div>
 				</div>
 				<div id="nav2_1_2">
@@ -74,12 +74,12 @@
 		<div id="nav3">
 			<div id="nav3_1">
 				<div id="data_info">
-					<img alt="数据统计" width="36px;" height="36px;" src="${pageContext.request.contextPath}/images/i05.png">
+					<img alt="数据统计" width="30px;" height="30px;" src="${pageContext.request.contextPath}/images/i05.png">
 				</div>
 				<div style="float:left;"><font>数据统计</font></div>
 				<div id="data_btn">
 					<div class="btn_by_date">
-						<a href="#"><font size="4px">今天</font></a>
+						<a href="javascript:void(0)" id="today_temhum_data"><font size="4px">今天</font></a>
 					</div>
 					<div class="btn_by_date">
 						<a href="#"><font size="4px">本周</font></a>
@@ -98,6 +98,28 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/myjs/index.js"></script>
 	</body>
 	<script type="text/javascript">
+	
+	/*
+	*  初始化饼图
+	*/
+	$.ajax({
+		type : "GET",
+		url : "/temhum/lateData",
+		dataType : "json",
+		success : function (result) {
+			if (result['status'] == 200) {
+				//获取数据成功
+				var tem = result['result']['tem'];
+				var hum = result['result']['hum'];
+				tem_option.series[0].data[0].value = tem;
+				hum_option.series[0].data[0].value = hum;
+				chartTem.setOption(tem_option, true);
+				chartHum.setOption(hum_option, true);
+			}
+		}
+	});
+	
+	
 	/**
 	 * 天气
 	 */
@@ -112,9 +134,9 @@
 			// console.log(result);
 			if (result['status'] == 200) {// 请求成功
 				var data = result['result'];
-				console.log(data.length);
+				//console.log(data.length);
 				for (var i = 0; i < data.length; i++) {
-					console.log(data[i]);
+					//console.log(data[i]);
 					var item = "<div class='wea_div'>" + "<div class='wea_date'>"
 							+ data[i]['date'] + data[i]['wea'] + "</div>"
 							+ "<div class='wea_wea'>" + "<big class='"
@@ -127,5 +149,29 @@
 			}
 		},
 	});
+	
+	
+	
+	//点击获取今天的数据
+	//$('#today_temhum_data').click(function(){
+
+		$.ajax({
+			type: "GET",
+			url : "/temhum/todayData",
+			dataType : "json",
+			success : function(result) {
+				if (result['status'] == 200) {
+					//请求成功
+					console.log(result['temData']);
+					console.log(result['humData']);
+					day_data_option.series[0].data = result['temData'];
+					day_data_option.series[1].data = result['humData'];
+					chartDay_data.setOption(day_data_option, true);
+				}
+			}
+			
+		});
+//	});
+	
 	</script>
 </html>

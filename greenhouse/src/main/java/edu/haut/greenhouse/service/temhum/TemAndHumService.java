@@ -16,9 +16,23 @@ public interface TemAndHumService extends BaseService<TemAndHum> {
 
 	/**
 	 * 获取今天的温湿度数据
+	 * 从redis中获取
 	 * @return
 	 */
-	List<TemHumItem> getToday();
+	List<TemAndHum> getTodayFromRedis();
+	
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
+	List<TemAndHum> getDayDataFromMysql(String date);
+	
+	/**
+	 * 获取最近的一条数据
+	 * @return
+	 */
+	TemAndHum selectLateData();
 	
 	/**
 	 * 插入数据

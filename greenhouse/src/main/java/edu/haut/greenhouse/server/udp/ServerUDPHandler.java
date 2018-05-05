@@ -5,10 +5,8 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
-import edu.haut.greenhouse.bean.temhum.TemHumItem;
 import edu.haut.greenhouse.common.util.JsonUtils;
 import edu.haut.greenhouse.common.util.redis.RedisManager;
-import edu.haut.greenhouse.mapper.temhum.TemAndHumMapper;
 import edu.haut.greenhouse.pojo.temhum.TemAndHum;
 import edu.haut.greenhouse.server.websocket.WebsocketConfig;
 import edu.haut.greenhouse.service.temhum.TemAndHumService;
@@ -62,26 +60,21 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 			if (temAndHum.length == 2) {
 				BigDecimal tem = new BigDecimal(temAndHum[0]).setScale(2, BigDecimal.ROUND_HALF_UP);
 				BigDecimal hum = new BigDecimal(temAndHum[1]).setScale(2, BigDecimal.ROUND_HALF_UP);
-				
+			
+				TemAndHum th = new TemAndHum();
+				th.setCreateTime(date);
+				th.setHum(hum);
+				th.setTem(tem);
 				try {
 					//将数据存到mysql
-					TemAndHum th = new TemAndHum();
-					th.setCreateTime(date);
-					th.setHum(hum);
-					th.setTem(tem);
 					temAndHumService.insertData(th);
 				} catch (Exception e1) {
 				}
 				
-				//将数据存到redis
 				try {
-					
+					//将数据存到redis
 					String key = "tem&hum:"+ date.toString();
-					TemHumItem item = new TemHumItem();
-					item.setHum(hum);
-					item.setTem(tem);
-					item.setTime(date);
-					String value = JsonUtils.toJson(item);
+					String value = JsonUtils.toJson(th);
 					RedisManager.set(key.getBytes(), value.getBytes());
 				} catch (Exception e) {
 				}

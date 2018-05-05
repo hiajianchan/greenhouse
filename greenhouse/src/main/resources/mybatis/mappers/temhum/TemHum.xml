@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.haut.greenhouse.mapper.temhum.TemAndHumMapper" >
+  <resultMap id="BaseResultMap" type="edu.haut.greenhouse.pojo.temhum.TemAndHum" >
+   	<id column="id" property="id" jdbcType="BIGINT" />
+  	<result column="tem" property="tem" jdbcType="DECIMAL" />
+  	<result column="hum" property="hum" jdbcType="DECIMAL" />
+  	<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+  	id, tem, hum, create_time
+  </sql>
+  
+  <select id="selectLateData" resultMap="BaseResultMap">
+  	select * from tem_hum
+	where create_time = 
+	(select max(create_time) from tem_hum) LIMIT 1
+  </select>
+  
+</mapper>
