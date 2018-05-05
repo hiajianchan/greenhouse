@@ -202,7 +202,7 @@ public class LoginController {
 	 * 跳转到登录界面
 	 * @return
 	 */
-	@RequestMapping("goLogin")
+	@RequestMapping(value = {"/goLogin", "/"})
 	public String goLogin(HttpServletRequest request, Map<Object, Object> map) {
 		
 		String status = request.getParameter("status");

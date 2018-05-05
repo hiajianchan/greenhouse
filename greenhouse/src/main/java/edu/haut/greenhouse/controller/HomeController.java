@@ -18,7 +18,7 @@ import edu.haut.greenhouse.common.util.WebUtils;
  */
 @Controller
 public class HomeController {
-
+	
 	/**
 	 * 进入首页
 	 * @param request

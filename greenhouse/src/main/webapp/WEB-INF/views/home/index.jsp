@@ -32,13 +32,13 @@
 						<font style="font-size:20px; color:white;">温室环境监测系统</font>
 				</div>
 			</div>
-			
-			<div id="manage_div">
-				<a href="${pageContext.request.contextPath}/main" title="进入后台">
-					<img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" height="40px" width="40px;">
-				</a>
-			</div>
-			
+			<shiro:hasRole name="root">
+				<div id="manage_div">
+					<a href="${pageContext.request.contextPath}/main" title="进入后台">
+						<img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" height="40px" width="40px;">
+					</a>
+				</div>
+			</shiro:hasRole>
 			<div id="user_div">
 				<div id="user_info"><font color="white">${currUser.name } 你好，欢迎使用系统</font></div>
 				<div id="out"><a href="${pageContext.request.contextPath}/logout"><font color="white">登出</font></a></div>
