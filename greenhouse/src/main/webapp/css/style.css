@@ -139,9 +139,9 @@ h2 {
 }
 
 .systemlogo {
-    background: url(../images/loginlogo.png) no-repeat center;
-    width: 100%;
-    height: 71px;
+   /*background: url(../images/loginlogo.png) no-repeat center;*/
+    /*width: 100%;*/
+    /*height: 71px;*/
     margin-top: 75px;
 }
 
