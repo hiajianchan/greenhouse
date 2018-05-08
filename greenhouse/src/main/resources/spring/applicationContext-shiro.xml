@@ -74,6 +74,11 @@
     <bean id="sessionManageer" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <property name="globalSessionTimeout" value="3600000"/>
         <property name="deleteInvalidSessions" value="true"/>
+        
+        <!-- 这一句是关键-->
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+
+        <property name="sessionIdCookieEnabled" value="true"/>
     </bean>
     <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>

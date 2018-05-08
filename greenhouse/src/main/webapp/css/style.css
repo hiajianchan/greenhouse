@@ -148,7 +148,7 @@ h2 {
 .loginbox {
     width: 692px;
     height: 336px;
-    background: url(../images/logininfo.png) no-repeat;
+    /*background: url(../images/logininfo.png) no-repeat;*/
     margin-top: 30px;
 }
 

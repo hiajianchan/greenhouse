@@ -12,7 +12,6 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/echarts/china.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/echarts/city-map.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/myjs/index.js"></script>
 		
 		<script type="text/javascript">
 		 	var cityName= '${cityName}';
@@ -99,94 +98,6 @@
 	</body>
 	<script type="text/javascript">
 	
-	/*
-	*  初始化饼图
-	*/
-	$.ajax({
-		type : "GET",
-		url : "/temhum/lateData",
-		dataType : "json",
-		success : function (result) {
-			if (result['status'] == 200) {
-				//获取数据成功
-				var tem = result['result']['tem'];
-				var hum = result['result']['hum'];
-				tem_option.series[0].data[0].value = tem;
-				hum_option.series[0].data[0].value = hum;
-				chartTem.setOption(tem_option, true);
-				chartHum.setOption(hum_option, true);
-			}
-		}
-	});
-	
-	
-	/**
-	 * 天气
-	 */
-	$.ajax({
-		type : "GET",
-		url : "/api/getWeather",
-		data : {
-			cityName : "郑州"
-		},
-		dataType : "json",
-		success : function(result) {
-			// console.log(result);
-			if (result['status'] == 200) {// 请求成功
-				var data = result['result'];
-				//console.log(data.length);
-				for (var i = 0; i < data.length; i++) {
-					//console.log(data[i]);
-					var item = "<div class='wea_div'>" + "<div class='wea_date'>"
-							+ data[i]['date'] + data[i]['wea'] + "</div>"
-							+ "<div class='wea_wea'>" + "<big class='"
-							+ data[i]['img1'] + "'></big>" + "<big class='"
-							+ data[i]['img2'] + "'></big>" + "</div>"
-							+ "<div class='wea_tem'>" + data[i]['tem'] + "</div>"
-							+ "</div>"
-					$("#weather_div").append(item);
-				}
-			}
-		},
-	});
-	
-	$.ajax({
-		type: "GET",
-		url : "/temhum/todayData",
-		dataType : "json",
-		success : function(result) {
-			if (result['status'] == 200) {
-				//请求成功
-				day_data_option.series[0].data = result['temData'];
-				day_data_option.series[1].data = result['humData'];
-				chartDay_data.setOption(day_data_option, true);
-			}
-		}
-		
-	});
-	
-	
-	//点击获取今天的数据
-	
-	$('#today_temhum_data').click(function(){
-
-		$.ajax({
-			type: "GET",
-			url : "/temhum/todayData",
-			dataType : "json",
-			success : function(result) {
-				if (result['status'] == 200) {
-					//请求成功
-					//console.log(result['temData']);
-					//console.log(result['humData']);
-					day_data_option.series[0].data = result['temData'];
-					day_data_option.series[1].data = result['humData'];
-					chartDay_data.setOption(day_data_option, true);
-				}
-			}
-			
-		});
-	});
 	
 	</script>
 </html>
