@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html style="100%">
+<html>
 	<head>
 		<meta charset="utf-8" content="width=device-width, initial-scale=1">
 		<title>温湿度监测平台首页</title>
@@ -21,25 +21,27 @@
 		</script>
 	
 	</head>
-	<body style="background: #ededed;height:100%">
+	<body style="background: #ededed;">
 		<div id="nav1">
 			<div id="log_div">
 				<div style="height:100%;float:left;">
 					<img src="${pageContext.request.contextPath}/images/index_logo.png" height="40px" width="40px;"/>
 				</div>
-				<div style="float:left;">
-						<font style="font-size:20px; color:white;">温室环境监测系统</font>
+				<div style="float:left;height: 100%;text-align: center;">
+						<p style="height: 100%;">
+							<font style="font-size:20px; color:white;">温室环境监测系统</font>
+						</p>
 				</div>
 			</div>
 			<shiro:hasRole name="root">
 				<div id="manage_div">
 					<a href="${pageContext.request.contextPath}/main" title="进入后台">
-						<img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" height="40px" width="40px;">
+						<img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" style="height: 40px;width:40px">
 					</a>
 				</div>
 			</shiro:hasRole>
 			<div id="user_div">
-				<div id="user_info"><font color="white">${currUser.name } 你好，欢迎使用系统</font></div>
+				<div id="user_info"><p style="height: 100%;vertical-align:middle;"><font color="white">${currUser.name } 你好，欢迎使用系统</font></p></div>
 				<div id="out"><a href="${pageContext.request.contextPath}/logout"><font color="white">登出</font></a></div>
 			</div>
 		</div>  
@@ -47,7 +49,7 @@
 		<div id="nav2">
 			<div id="nav2_1">
 				<div id="nav2_1_1">
-					<div style="height:100%;float:left">
+					<div style="height:100%;float:left;">
 						<img src="${pageContext.request.contextPath}/images/earth55.png" height="36px" width="36px;"/>
 					</div>
 					<div style="float:left;">
@@ -56,7 +58,7 @@
 				</div>
 				<div id="nav2_1_2">
 					<div id="map_div"></div>
-					<div id="time_div"><font id="cuTime"></font></div>
+					<div id="time_div"><p style="height:100%;"><font id="cuTime"></font></p></div>
 				</div>
 
 				<div id="weather_div">

@@ -1,15 +1,19 @@
+html,body{
+	height:100%;
+	margin:0;
+	padding:0;
+}
+
 #nav1 {
-	height: 40px;
-	width: 100%;
+	height: 8%;
 	text-align: center;
-	line-height: 40px;
 
 	background: #fff;
 	/* border-radius:0 0 15px 15px; */
 	margin-bottom: 5px;
 }
 #log_div {
-	height: 40px;
+	height: 100%;
 	width:20%;
 	float: left;
 	text-align: center;
@@ -54,13 +58,14 @@
 }
 
 #nav2 {
-	height: 280px;
+	/* height: 280px; */
+	height: 45%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
 #nav2_1 {
-	height: 280px;
+	height: 100%;
 	width: 48%;
 	float: left;
 	background: #fff;
@@ -68,71 +73,74 @@
 }
 
 #nav2_1_1 {
-	height: 36px;
+	/* height: 36px; */
+	height: 12%;
 	width: 100%;
-	line-height: 36px;
+	/* line-height: 36px; */
 	text-align: center;
 	background: #F0F0F0;
 	border: 1px solid #DCDCDC;
 }
 
 #nav2_1_2 {
-	height: 120px;
+	/* height: 120px; */
+	height:43%;
 	width: 100%;
 	border: 1px solid #DCDCDC;
 	/*background: #FF0000;*/
 }
 
 #map_div {
-	height: 120px;
+	height: 100%;
 	width: 25%;
 	float: left;
 	border-right: 1px solid #DCDCDC;
 }
 
 #time_div {
-	height: 120px;
+	height: 100%;
 	width: 74%;
 	text-align:center;
-	line-height: 120px;
+	/* line-height: 120px; */
 	float: right;
 }
 
 #weather_div {
-	height: 124px;
+	/* height: 124px; */
+	height:45%;
 	width: 100%;
 	text-align:center;
-	line-height: 124px;
+	/* line-height: 124px; */
 }
 
 .wea_div {
-	height: 124px;
+	height: 100%;
 	width: 33%;
 	float:left;
 	text-align:center;
-	line-height: 124px;
+	/* line-height: 124px; */
 }
 .wea_date {
-	height: 31px;
+	height: 25%;
 	width: 100%;
 	text-align:center;
-	line-height: 31px;
+	/* line-height: 31px; */
 }
 .wea_wea {
-	height: 62px;
+	height: 50%;
 	width: 100%;
 	text-align:center;
-	line-height: 62px;
+	/* line-height: 62px; */
 }
 .wea_tem {
-	height: 31px;
+	height: 25%;
 	width: 100%;
 	text-align:center;
-	line-height: 31px;
+	/* line-height: 31px; */
 }
 
 #nav2_2 {
-	height: 280px;
+	height: 100%;
 	width: 51%;
 	float: right;
 	background: #fff;
@@ -140,61 +148,63 @@
 }
 
 #tem_div{
-	height:280px;
+	height:100%;
 	width:50%;
 	float:left;
 	text-align:center;
-	line-height: 280px;
+	/* line-height: 280px; */
 }
 
 #hum_div{
-	height:280px;
+	height:100%;
 	width:50%;
 	float:right;
 }
 
 #nav3 {
 	width: 100%;
-	height: 288px;
+	/* height: 288px; */
+	height:45%;
 	background: #fff;
 	margin-top: 5px;
 	border: 1px solid #DCDCDC;
 }
 
 #nav3_1 {
-	height: 30px;
+	/* height: 30px; */
+	height: 10%;
 	width: 100%;
 	background:#F0F0F0;
 	text-align:center;
-	line-height: 30px;
+	/* line-height: 30px; */
 }
 
 #data_info {
-	height: 30px;
+	height: 100%;
 	width: 50px;
 	float: left;
 	text-align:center;
-	line-height: 30px;
+	/* line-height: 30px; */
 }
 #data_btn {
-	height: 30px;
+	height: 10%;
 	width: 32%;
 	float: right;
 	text-align:center;
-	line-height: 30px;
+	/* line-height: 30px; */
 }
 .btn_by_date {
-	height: 30px;
+	height: 10%;
 	width: 25%;
 	float: left;
 	text-align:center;
-	line-height: 30px;
+	/* line-height: 30px; */
 }
 #data_area {
-	height: 258px;
+	height: 90%;
 	width:100%;
 	text-align:center;
-	line-height: 258px;
+	/* line-height: 258px; */
 }
 
 /*当前时间的显示*/
