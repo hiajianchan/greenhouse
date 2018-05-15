@@ -113,7 +113,7 @@ $(document).ready(function(){
         <td>${ul.user.name}</td>
         <td>
         	<c:if test="${ul.user.gender == 1 }">男</c:if>
-        	<c:if test="${ul.user.gender == 2 }">男</c:if>
+        	<c:if test="${ul.user.gender == 2 }">女</c:if>
         	<c:if test="${ul.user.gender == 0 }">未知</c:if>
         </td>
         <td>${ul.user.mobile}</td>
