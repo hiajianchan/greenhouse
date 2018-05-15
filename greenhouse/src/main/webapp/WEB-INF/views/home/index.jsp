@@ -6,7 +6,7 @@
 	<head>
 		<meta charset="utf-8" content="width=device-width, initial-scale=1">
 		<title>温湿度监测平台首页</title>
-		<link href="${pageContext.request.contextPath}/css/index2.css" rel="stylesheet" type="text/css">
+		<link href="${pageContext.request.contextPath}/css/index.css" rel="stylesheet" type="text/css">
 		<link href="${pageContext.request.contextPath}/css/wea_headStyle.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/echarts/echarts.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/echarts/china.js"></script>
