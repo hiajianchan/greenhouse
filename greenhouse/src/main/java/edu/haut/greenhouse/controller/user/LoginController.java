@@ -123,8 +123,7 @@ public class LoginController {
 					record1.setUserId(user.getId());
 					UserInfo userInfo = userInfoService.queryOne(record1);
 					session.setAttribute("currUserInfo", userInfo);
-					session.setAttribute("loginTime", new Date());
-					/*try {
+					try {
 						//更新用户的登录信息
 						UserInfo info = new UserInfo();
 						info.setId(userInfo.getId());
@@ -138,7 +137,7 @@ public class LoginController {
 						userInfoService.updateSelective(info);
 					} catch (Exception e) {
 						e.printStackTrace();
-					}*/
+					}
 				}
 				
 				return "redirect:/index";
@@ -174,24 +173,24 @@ public class LoginController {
 		Subject subject = SecurityUtils.getSubject();
 	
 		//更新用户信息
-		try {
-			Session session = subject.getSession();
-			UserInfo userInfo = (UserInfo) session.getAttribute("currUserInfo");
-			Date loginTime = (Date) session.getAttribute("loginTime");
-			
-			UserInfo info = new UserInfo();
-			info.setId(userInfo.getId());
-			info.setUserId(userInfo.getUserId());
-			info.setLastLogin(loginTime);
-			String realIp = WebUtils.getRealIp(request);
-			info.setLastIp(realIp);
-			Map<Object, Object> ipInfo = WebUtils.getIpInfo(realIp);
-			info.setLastCountry(ipInfo.get("country").toString());
-			info.setLastCity(ipInfo.get("city").toString());
-			userInfoService.updateSelective(info);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Session session = subject.getSession();
+//			UserInfo userInfo = (UserInfo) session.getAttribute("currUserInfo");
+//			Date loginTime = (Date) session.getAttribute("loginTime");
+//			
+//			UserInfo info = new UserInfo();
+//			info.setId(userInfo.getId());
+//			info.setUserId(userInfo.getUserId());
+//			info.setLastLogin(loginTime);
+//			String realIp = WebUtils.getRealIp(request);
+//			info.setLastIp(realIp);
+//			Map<Object, Object> ipInfo = WebUtils.getIpInfo(realIp);
+//			info.setLastCountry(ipInfo.get("country").toString());
+//			info.setLastCity(ipInfo.get("city").toString());
+//			userInfoService.updateSelective(info);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
 		subject.logout();
         

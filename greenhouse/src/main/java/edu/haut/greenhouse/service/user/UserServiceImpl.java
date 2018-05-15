@@ -154,6 +154,15 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		user.setRegisterTime(new Date());
 		int res1 = userMapper.insert(user);
 		
+		//新增用户info数据
+		try {
+			UserInfo info = new UserInfo();
+			info.setUserId(user.getId());
+			userInfoMapper.insert(info);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		int i = 0;
 		if (roleList == null || roleList.length == 0) {
 			if (res1 == 1) {
