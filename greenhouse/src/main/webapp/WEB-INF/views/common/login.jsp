@@ -55,8 +55,8 @@
                 </li>
                 <li>
                     <input type="submit" class="loginbtn" value="登录"/>
-                    <label><input name="rememberme" type="checkbox" checked="checked"/>记住密码</label><label>
-                    <a href="#">忘记密码？</a></label>
+                    <label><input name="rememberme" type="checkbox"/>记住密码</label>
+                    <!-- <label><a href="#">忘记密码？</a></label> -->
                 </li>
 
             </ul>
