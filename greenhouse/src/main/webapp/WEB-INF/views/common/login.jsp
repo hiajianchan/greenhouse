@@ -31,11 +31,11 @@
 
 <div class="logintop">
     <span>温室温湿度监测平台</span>
-    <ul>
+   <!--  <ul>
         <li><a href="#">回首页</a></li>
         <li><a href="#">帮助</a></li>
         <li><a href="#">关于</a></li>
-    </ul>
+    </ul> -->
 </div>
 
 <div class="loginbody">

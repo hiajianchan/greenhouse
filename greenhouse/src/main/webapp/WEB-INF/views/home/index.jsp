@@ -25,10 +25,10 @@
 		<div id="nav1">
 			<div id="log_div">
 				<div style="height:100%;float:left;">
-					<img src="${pageContext.request.contextPath}/images/index_logo.png" height="40px" width="40px;"/>
+					<img src="${pageContext.request.contextPath}/images/index_logo.png" style="padding-top:10%;" height="40px" width="40px;"/>
 				</div>
 				<div style="float:left;height: 100%;text-align: center;">
-						<p style="height: 100%;">
+						<p style="height: 100%;padding-top:5%;">
 							<font style="font-size:20px; color:white;">温室环境监测系统</font>
 						</p>
 				</div>
@@ -36,13 +36,17 @@
 			<shiro:hasRole name="root">
 				<div id="manage_div">
 					<a href="${pageContext.request.contextPath}/main" title="进入后台">
-						<img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" style="height: 40px;width:40px">
+						<img alt="用户管理" src="${pageContext.request.contextPath}/images/manage.png" style="height: 40px;width:40px;padding-top:5%;">
 					</a>
 				</div>
 			</shiro:hasRole>
 			<div id="user_div">
-				<div id="user_info"><p style="height: 100%;vertical-align:middle;"><font color="white">${currUser.name } 你好，欢迎使用系统</font></p></div>
-				<div id="out"><a href="${pageContext.request.contextPath}/logout"><font color="white">登出</font></a></div>
+				<div id="user_info"><p style="height: 100%;padding-top:5%;"><font color="white">${currUser.name } 你好，欢迎使用系统</font></p></div>
+				<div id="out">
+				<p style="height: 100%;padding-top:25%;">
+					<a href="${pageContext.request.contextPath}/logout"><font color="white">登出</font></a>
+				</p>
+				</div>
 			</div>
 		</div>  
 			
@@ -50,19 +54,24 @@
 			<div id="nav2_1">
 				<div id="nav2_1_1">
 					<div style="height:100%;float:left;">
-						<img src="${pageContext.request.contextPath}/images/earth55.png" height="36px" width="36px;"/>
+						<img src="${pageContext.request.contextPath}/images/earth55.png" style="padding-top:2%;" height="36px" width="36px;"/>
 					</div>
 					<div style="float:left;">
-						<font>您当前所在城市：${cityName}</font>
+						<p style="height: 100%;padding-top:5%;">
+						 	<font>您当前所在城市：${cityName}</font>
+						</p>
 					</div>
 				</div>
 				<div id="nav2_1_2">
 					<div id="map_div"></div>
-					<div id="time_div"><p style="height:100%;"><font id="cuTime"></font></p></div>
+					<div id="time_div">
+						<p style="height:100%; padding-top:7%;">
+							<font id="cuTime"></font>
+						</p>
+					</div>
 				</div>
 
 				<div id="weather_div">
-									
 				</div>
 			</div>
 
@@ -77,7 +86,11 @@
 				<div id="data_info">
 					<img alt="数据统计" width="30px;" height="30px;" src="${pageContext.request.contextPath}/images/i05.png">
 				</div>
-				<div style="float:left;"><font>数据统计</font></div>
+				<div style="float:left;">
+					<p style="height:100%; padding-top:7%;">
+						<font>数据统计</font>
+					</p>
+				</div>
 				<div id="data_btn">
 					<div class="btn_by_date">
 						<a href="javascript:void(0)" id="today_temhum_data"><font size="4px">今天</font></a>
