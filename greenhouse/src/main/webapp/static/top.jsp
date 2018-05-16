@@ -51,7 +51,7 @@
         <li><a>${currUser.name }  您好，欢迎使用信息管理系统</a></li>
         <li><a href="/logout" target="_parent">退出</a></li>
     </ul>
-    <div class="user">
+   <%--  <div class="user">
         <span>
         <shiro:hasRole name="admin">
             超级管理员
@@ -63,9 +63,9 @@
             会员
         </shiro:hasRole>
         </span>
-        <i></i>
+    <i></i>
         <b></b>
-    </div>
+    </div> --%>
 
 </div>
 </body>

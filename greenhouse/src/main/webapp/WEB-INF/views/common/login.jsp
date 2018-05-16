@@ -31,11 +31,11 @@
 
 <div class="logintop">
     <span>温室温湿度监测平台</span>
-    <ul>
+   <!--  <ul>
         <li><a href="#">回首页</a></li>
         <li><a href="#">帮助</a></li>
         <li><a href="#">关于</a></li>
-    </ul>
+    </ul> -->
 </div>
 
 <div class="loginbody">
@@ -55,8 +55,8 @@
                 </li>
                 <li>
                     <input type="submit" class="loginbtn" value="登录"/>
-                    <label><input name="rememberme" type="checkbox" checked="checked"/>记住密码</label><label>
-                    <a href="#">忘记密码？</a></label>
+                    <label><input name="rememberme" type="checkbox"/>记住密码</label>
+                    <!-- <label><a href="#">忘记密码？</a></label> -->
                 </li>
 
             </ul>
