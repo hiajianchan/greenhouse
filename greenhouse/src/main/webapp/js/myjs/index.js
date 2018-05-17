@@ -304,7 +304,7 @@ $('#today_temhum_data').click(function(){
 var nowTime;
 function play() {
 	var time = new Date();
-	var month = time.getMonth();
+	var month = time.getMonth()+1;
 	if (month < 10) {
 		month = "0" + month;
 	}
