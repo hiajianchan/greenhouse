@@ -2,7 +2,6 @@ package edu.haut.greenhouse.service.temhum;
 
 import java.util.List;
 
-import edu.haut.greenhouse.bean.temhum.TemHumItem;
 import edu.haut.greenhouse.pojo.temhum.TemAndHum;
 import edu.haut.greenhouse.service.BaseService;
 /**
