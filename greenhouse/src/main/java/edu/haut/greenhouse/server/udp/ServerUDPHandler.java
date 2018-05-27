@@ -11,6 +11,7 @@ import edu.haut.greenhouse.pojo.temhum.TemAndHum;
 import edu.haut.greenhouse.server.websocket.WebsocketConfig;
 import edu.haut.greenhouse.service.temhum.TemAndHumService;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -93,9 +94,9 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 //		ctx.writeAndFlush(new DatagramPacket(
 //				Unpooled.copiedBuffer("received your msg " + System.currentTimeMillis(), CharsetUtil.UTF_8), 
 //				packet.sender())).sync();
-//		ctx.writeAndFlush(new DatagramPacket(
-//				Unpooled.copiedBuffer("111", CharsetUtil.UTF_8), 
-//				packet.sender())).sync();
+		ctx.writeAndFlush(new DatagramPacket(
+				Unpooled.copiedBuffer("111", CharsetUtil.UTF_8), 
+				packet.sender())).sync();
 	}
 	
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
