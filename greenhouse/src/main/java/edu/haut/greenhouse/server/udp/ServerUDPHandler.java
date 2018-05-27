@@ -94,9 +94,9 @@ public class ServerUDPHandler extends ChannelInboundHandlerAdapter {
 //		ctx.writeAndFlush(new DatagramPacket(
 //				Unpooled.copiedBuffer("received your msg " + System.currentTimeMillis(), CharsetUtil.UTF_8), 
 //				packet.sender())).sync();
-		ctx.writeAndFlush(new DatagramPacket(
-				Unpooled.copiedBuffer("111", CharsetUtil.UTF_8), 
-				packet.sender())).sync();
+//		ctx.writeAndFlush(new DatagramPacket(
+//				Unpooled.copiedBuffer("111", CharsetUtil.UTF_8), 
+//				packet.sender())).sync();
 	}
 	
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
