@@ -17,6 +17,7 @@ import com.github.abel533.entity.Example;
 import com.github.abel533.entity.Example.Criteria;
 
 import edu.haut.greenhouse.bean.PageResult;
+import edu.haut.greenhouse.bean.user.PermissionStatus;
 import edu.haut.greenhouse.bean.user.ResourceObjStatus;
 import edu.haut.greenhouse.common.util.JsonStatus;
 import edu.haut.greenhouse.common.util.JsonUtils;
@@ -115,6 +116,7 @@ public class PermissionController {
 		permission.setPerNameCh(perNameCh);
 		
 		permission.setCreateTime(new Date());
+		permission.setStatus(PermissionStatus.USEABLE.getStatus());
 		
 		permissionService.save(permission);
 		
