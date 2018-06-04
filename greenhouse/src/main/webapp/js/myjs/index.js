@@ -104,10 +104,32 @@ chartHum.setOption(hum_option, true);
 /**
  * 画出当天温度和湿度
  */
+var time = new Date();
+var month = time.getMonth()+1;
+if (month < 10) {
+	month = "0" + month;
+}
+var day = time.getDate();
+if (day < 10) {
+	day = "0" + day;
+}
+var today = time.getFullYear() + "-" + month + "-" + day +" "+"00:00:00";
+var today_data = time.getFullYear() + "-" + month + "-" + day;
 
+time.setTime(time.getTime()+24*60*60*1000);
+var n_month = time.getMonth() + 1;
+if (n_month < 10) {
+	n_month = "0" + n_month;
+}
+var n_day = time.getDate();
+if (n_day < 10) {
+	n_day = "0" + n_day;
+}
+
+var tomorr = time.getFullYear() + "-" + n_month + "-" + n_day +" "+"00:00:00";
 var anchor = [
-    {name:'2018-05-05 00:00:00', value:['2018-05-05 00:00:00', 0]},
-    {name:'2018-05-06 00:00:00', value:['2018-05-06 00:00:00', 0]}
+    {name:today, value:[today, 0]},
+    {name:tomorr, value:[tomorr, 0]}
     ];
 var chartDay_data = echarts.init(document.getElementById('data_area'));
 day_data_option = {
@@ -261,15 +283,16 @@ $.ajax({
 
 $.ajax({
 	type: "GET",
-	url : "/temhum/todayData",
+	url : "/temhum/todayData?today=" + today_data,
 	dataType : "json",
 	success : function(result) {
 		if (result['status'] == 200) {
 			//请求成功
 			day_data_option.series[0].data = result['temData'];
 			day_data_option.series[1].data = result['humData'];
-			chartDay_data.setOption(day_data_option, true);
+			
 		}
+		chartDay_data.setOption(day_data_option, true);
 	}
 	
 });
@@ -281,7 +304,7 @@ $('#today_temhum_data').click(function(){
 
 	$.ajax({
 		type: "GET",
-		url : "/temhum/todayData",
+		url : "/temhum/todayData?today=" + today_data,
 		dataType : "json",
 		success : function(result) {
 			if (result['status'] == 200) {
@@ -290,8 +313,9 @@ $('#today_temhum_data').click(function(){
 				//console.log(result['humData']);
 				day_data_option.series[0].data = result['temData'];
 				day_data_option.series[1].data = result['humData'];
-				chartDay_data.setOption(day_data_option, true);
+				
 			}
+			chartDay_data.setOption(day_data_option, true);
 		}
 		
 	});

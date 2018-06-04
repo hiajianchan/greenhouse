@@ -72,7 +72,7 @@ public class TemAndHumServiceImpl extends BaseServiceImpl<TemAndHum> implements 
 			return null;
 		}
 		
-		Date today = DateUtil.fomatDate("2018-05-05", "yyyy-MM-dd");
+		Date today = DateUtil.fomatDate(date, "yyyy-MM-dd");
     	
     	Calendar calendar = Calendar.getInstance();
 		calendar.setTime(today);
