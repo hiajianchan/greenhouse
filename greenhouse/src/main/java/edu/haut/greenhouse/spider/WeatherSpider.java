@@ -8,13 +8,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.junit.internal.runners.TestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.github.abel533.entity.Example;
-import com.github.abel533.entity.Example.Criteria;
-
 import edu.haut.greenhouse.common.util.StringUtil;
 import edu.haut.greenhouse.mapper.dictionary.WeatherCityMapper;
 import edu.haut.greenhouse.pojo.dictionary.WeatherCity;
