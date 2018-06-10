@@ -3,12 +3,17 @@ package edu.haut.greenhouse.spider;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.junit.internal.runners.TestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.github.abel533.entity.Example;
+import com.github.abel533.entity.Example.Criteria;
 
 import edu.haut.greenhouse.common.util.StringUtil;
 import edu.haut.greenhouse.mapper.dictionary.WeatherCityMapper;
@@ -27,13 +32,19 @@ public class WeatherSpider {
 	private WeatherCityMapper weatherCityMapper;
 	
 	public List<Weather> getWeather(String cityname) {
-//		String code = getCityCode(cityname);
-		String code = "101180101";
+		String code = getCityCode(cityname);
+		if (code == null || "".equals(code)) {
+			code = "101180101";
+		}
+		
 		String url = "http://www.weather.com.cn/weather/" + code + ".shtml";
 	
 		List<Weather> weaList = null;
 		try {
-			Document doc = Jsoup.connect(url).get();
+//			Document doc = Jsoup.connect(url).get();
+			Connection connect = Jsoup.connect(url);
+			connect.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36");
+			Document doc = connect.get();
 			Element div = doc.getElementById("7d");
 			
 			Elements ul = div.getElementsByClass("t");
@@ -95,9 +106,11 @@ public class WeatherSpider {
 		return null;
 	}
 	
+	
 	public static void main(String[] args) {
 		WeatherSpider spider = new WeatherSpider();
 		List<Weather> list = spider.getWeather("郑州");
 		System.out.println(list);
+
 	}
 }
