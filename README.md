@@ -5,4 +5,4 @@
 
 使用shiro对用户权限做了相应额控制。
 
-与之对应的下位机系统：STM32+Quectel BC95-B5+STH20：
+与之对应的下位机系统：STM32+Quectel BC95-B5+STH20：https://github.com/hiajianchan/humiture
